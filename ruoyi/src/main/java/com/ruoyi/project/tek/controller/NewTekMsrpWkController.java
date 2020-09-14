@@ -356,12 +356,19 @@ public class NewTekMsrpWkController extends BaseController {
             for (NewTekMsrpWk newTekMsrpWk1 : newTekMsrpWkList) {
                 LocalDate fromWKExist = LocalDate.parse(newTekMsrpWk1.getValidFromWK(), fmt);
                 LocalDate toWKExist = LocalDate.parse(newTekMsrpWk1.getValidToWK(), fmt);
-                if (fromWK.compareTo(fromWKExist) == 0 || toWK.compareTo(toWKExist) == 0 ||
-                (fromWK.compareTo(fromWKExist) > 0 && toWK.compareTo(toWKExist) < 0) ||
-                (fromWK.compareTo(fromWKExist) > 0 && toWK.compareTo(toWKExist) > 0) ||
-                fromWK.compareTo(toWKExist) == 0) {
-                    return AjaxResult.error("不能维护已存在的周期价格！");
+                if (fromWKExist.equals(toWKExist)) {
+                    if (fromWK.compareTo(fromWKExist) == 0 || toWK.compareTo(toWKExist) == 0 || fromWK.compareTo(toWKExist) == 0) {
+                        return AjaxResult.error("不能维护已存在的周期价格！");
+                    }
+                } else {
+                    if (fromWK.compareTo(fromWKExist) == 0 || toWK.compareTo(toWKExist) == 0 ||
+                            (fromWK.compareTo(fromWKExist) > 0 && toWK.compareTo(toWKExist) < 0) ||
+                            (fromWK.compareTo(fromWKExist) > 0 && toWK.compareTo(toWKExist) > 0) ||
+                            fromWK.compareTo(toWKExist) == 0) {
+                        return AjaxResult.error("不能维护已存在的周期价格！");
+                    }
                 }
+
             }
         }
         NewTekMsrp newTekMsrp = new NewTekMsrp();
