@@ -2,9 +2,12 @@ package com.ruoyi.project.system.domain;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+
+import lombok.Data;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -90,6 +93,20 @@ public class SysUser extends BaseEntity
 
     /** 岗位组 */
     private Long[] postIds;
+
+    private String[] countryName;
+
+    private String countryNames;
+
+    private Map<String,String> countryNameMap;
+
+    private String[] customerName;
+
+    private String customerNames;
+
+    private Map<String,String> customerNameMap;
+
+    private Long[] menuIds;
 
     public SysUser()
     {
@@ -297,7 +314,63 @@ public class SysUser extends BaseEntity
     {
         this.postIds = postIds;
     }
-    
+
+    public String[] getCountryName() {
+        return countryName;
+    }
+
+    public void setCountryName(String[] countryName) {
+        this.countryName = countryName;
+    }
+
+    public String[] getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String[] customerName) {
+        this.customerName = customerName;
+    }
+
+    public Long[] getMenuIds() {
+        return menuIds;
+    }
+
+    public void setMenuIds(Long[] menuIds) {
+        this.menuIds = menuIds;
+    }
+
+    public String getCountryNames() {
+        return countryNames;
+    }
+
+    public void setCountryNames(String countryNames) {
+        this.countryNames = countryNames;
+    }
+
+    public String getCustomerNames() {
+        return customerNames;
+    }
+
+    public void setCustomerNames(String customerNames) {
+        this.customerNames = customerNames;
+    }
+
+    public Map<String, String> getCountryNameMap() {
+        return countryNameMap;
+    }
+
+    public void setCountryNameMap(Map<String, String> countryNameMap) {
+        this.countryNameMap = countryNameMap;
+    }
+
+    public Map<String, String> getCustomerNameMap() {
+        return customerNameMap;
+    }
+
+    public void setCustomerNameMap(Map<String, String> customerNameMap) {
+        this.customerNameMap = customerNameMap;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
@@ -321,6 +394,9 @@ public class SysUser extends BaseEntity
             .append("updateTime", getUpdateTime())
             .append("remark", getRemark())
             .append("dept", getDept())
+            .append("customerNames",getCustomerNames())
+            .append("countryNames",getCountryNames())
+            .append("menuIds",getMenuIds())
             .toString();
     }
 }

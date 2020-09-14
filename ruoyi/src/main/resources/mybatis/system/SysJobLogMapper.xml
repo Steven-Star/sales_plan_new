@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.project.monitor.mapper.SysJobLogMapper">
 
-	<resultMap type="SysJobLog" id="SysJobLogResult">
+	<resultMap type="com.ruoyi.project.monitor.domain.SysJobLog" id="SysJobLogResult">
 		<id     property="jobLogId"       column="job_log_id"      />
 		<result property="jobName"        column="job_name"        />
 		<result property="jobGroup"       column="job_group"       />
@@ -17,10 +17,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<sql id="selectJobLogVo">
         select job_log_id, job_name, job_group, invoke_target, job_message, status, exception_info, create_time 
-		from sys_job_log
+		from new_sys_job_log
     </sql>
 	
-	<select id="selectJobLogList" parameterType="SysJobLog" resultMap="SysJobLogResult">
+	<select id="selectJobLogList" parameterType="com.ruoyi.project.monitor.domain.SysJobLog" resultMap="SysJobLogResult">
 		<include refid="selectJobLogVo"/>
 		<where>
 			<if test="jobName != null and jobName != ''">
@@ -48,28 +48,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<include refid="selectJobLogVo"/>
 	</select>
 	
-	<select id="selectJobLogById" parameterType="Long" resultMap="SysJobLogResult">
+	<select id="selectJobLogById" parameterType="java.lang.Long" resultMap="SysJobLogResult">
 		<include refid="selectJobLogVo"/>
 		where job_log_id = #{jobLogId}
 	</select>
 	
-	<delete id="deleteJobLogById" parameterType="Long">
- 		delete from sys_job_log where job_log_id = #{jobLogId}
+	<delete id="deleteJobLogById" parameterType="java.lang.Long">
+ 		delete from new_sys_job_log where job_log_id = #{jobLogId}
  	</delete>
  	
- 	<delete id="deleteJobLogByIds" parameterType="Long">
- 		delete from sys_job_log where job_log_id in
+ 	<delete id="deleteJobLogByIds" parameterType="java.lang.Long">
+ 		delete from new_sys_job_log where job_log_id in
  		<foreach collection="array" item="jobLogId" open="(" separator="," close=")">
  			#{jobLogId}
         </foreach> 
  	</delete>
  	
  	<update id="cleanJobLog">
-        truncate table sys_job_log
+        truncate table new_sys_job_log
     </update>
  	
- 	<insert id="insertJobLog" parameterType="SysJobLog">
- 		insert into sys_job_log(
+ 	<insert id="insertJobLog" parameterType="com.ruoyi.project.monitor.domain.SysJobLog">
+ 		insert into new_sys_job_log(
  			<if test="jobLogId != null and jobLogId != 0">job_log_id,</if>
  			<if test="jobName != null and jobName != ''">job_name,</if>
  			<if test="jobGroup != null and jobGroup != ''">job_group,</if>

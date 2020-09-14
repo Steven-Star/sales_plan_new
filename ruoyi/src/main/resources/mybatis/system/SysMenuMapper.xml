@@ -4,7 +4,7 @@
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.project.system.mapper.SysMenuMapper">
 
-	<resultMap type="SysMenu" id="SysMenuResult">
+	<resultMap type="com.ruoyi.project.system.domain.SysMenu" id="SysMenuResult">
 		<id     property="menuId"         column="menu_id"        />
 		<result property="menuName"       column="menu_name"      />
 		<result property="parentName"     column="parent_name"    />
@@ -27,10 +27,10 @@
 
 	<sql id="selectMenuVo">
         select menu_id, menu_name, parent_id, order_num, path, component, is_frame, menu_type, visible, status, ifnull(perms,'') as perms, icon, create_time 
-		from sys_menu
+		from new_sys_menu
     </sql>
-    
-    <select id="selectMenuList" parameterType="SysMenu" resultMap="SysMenuResult">
+
+    <select id="selectMenuList" parameterType="com.ruoyi.project.system.domain.SysMenu" resultMap="SysMenuResult">
 		<include refid="selectMenuVo"/>
 		<where>
 			<if test="menuName != null and menuName != ''">
@@ -45,84 +45,126 @@
 		</where>
 		order by parent_id, order_num
 	</select>
-	
+
 	<select id="selectMenuTreeAll" resultMap="SysMenuResult">
 		select distinct m.menu_id, m.parent_id, m.menu_name, m.path, m.component, m.visible, m.status, ifnull(m.perms,'') as perms, m.is_frame, m.menu_type, m.icon, m.order_num, m.create_time
-		from sys_menu m where m.menu_type in ('M', 'C') and m.status = 0
+		from new_sys_menu m where m.menu_type in ('M', 'C') and m.status = 0
 		order by m.parent_id, m.order_num
-	</select>
-	
-	<select id="selectMenuListByUserId" parameterType="SysMenu" resultMap="SysMenuResult">
-		select distinct m.menu_id, m.parent_id, m.menu_name, m.path, m.component, m.visible, m.status, ifnull(m.perms,'') as perms, m.is_frame, m.menu_type, m.icon, m.order_num, m.create_time
-		from sys_menu m
-		left join sys_role_menu rm on m.menu_id = rm.menu_id
-		left join sys_user_role ur on rm.role_id = ur.role_id
-		left join sys_role ro on ur.role_id = ro.role_id
-		where ur.user_id = #{params.userId}
-		<if test="menuName != null and menuName != ''">
-            AND menu_name like concat('%', #{menuName}, '%')
-		</if>
-		<if test="visible != null and visible != ''">
-            AND visible = #{visible}
-		</if>
-		<if test="status != null and status != ''">
-            AND status = #{status}
-		</if>
-		order by m.parent_id, m.order_num
-	</select>
-    
-    <select id="selectMenuTreeByUserId" parameterType="Long" resultMap="SysMenuResult">
-		select distinct m.menu_id, m.parent_id, m.menu_name, m.path, m.component, m.visible, m.status, ifnull(m.perms,'') as perms, m.is_frame, m.menu_type, m.icon, m.order_num, m.create_time
-		from sys_menu m
-			 left join sys_role_menu rm on m.menu_id = rm.menu_id
-			 left join sys_user_role ur on rm.role_id = ur.role_id
-			 left join sys_role ro on ur.role_id = ro.role_id
-			 left join sys_user u on ur.user_id = u.user_id
-		where u.user_id = #{userId} and m.menu_type in ('M', 'C') and m.status = 0  AND ro.status = 0
-		order by m.parent_id, m.order_num
-	</select>
-	
-	<select id="selectMenuListByRoleId" parameterType="Long" resultType="Integer">
-		select m.menu_id, m.parent_id
-		from sys_menu m
-            left join sys_role_menu rm on m.menu_id = rm.menu_id
-        where rm.role_id = #{roleId}
-        	and m.menu_id not in (select m.parent_id from sys_menu m inner join sys_role_menu rm on m.menu_id = rm.menu_id and rm.role_id = #{roleId})
-		order by m.parent_id, m.order_num
-	</select>
-	
-	<select id="selectMenuPerms" resultType="String">
-		select distinct m.perms
-		from sys_menu m
-			 left join sys_role_menu rm on m.menu_id = rm.menu_id
-			 left join sys_user_role ur on rm.role_id = ur.role_id
 	</select>
 
-	<select id="selectMenuPermsByUserId" parameterType="Long" resultType="String">
-		select distinct m.perms
-		from sys_menu m
-			 left join sys_role_menu rm on m.menu_id = rm.menu_id
-			 left join sys_user_role ur on rm.role_id = ur.role_id
-			 left join sys_role r on r.role_id = ur.role_id
-		where m.status = '0' and r.status = '0' and ur.user_id = #{userId}
+<!--	<select id="selectMenuListByUserId" parameterType="com.ruoyi.project.system.domain.SysMenu" resultMap="SysMenuResult">-->
+<!--		select distinct m.menu_id, m.parent_id, m.menu_name, m.path, m.component, m.visible, m.status, ifnull(m.perms,'') as perms, m.is_frame, m.menu_type, m.icon, m.order_num, m.create_time-->
+<!--		from new_sys_menu m-->
+<!--		left join new_sys_role_menu rm on m.menu_id = rm.menu_id-->
+<!--		left join new_sys_user_role ur on rm.role_id = ur.role_id-->
+<!--		left join new_sys_role ro on ur.role_id = ro.role_id-->
+<!--		where ur.user_id = #{params.userId}-->
+<!--		<if test="menuName != null and menuName != ''">-->
+<!--            AND menu_name like concat('%', #{menuName}, '%')-->
+<!--		</if>-->
+<!--		<if test="visible != null and visible != ''">-->
+<!--            AND visible = #{visible}-->
+<!--		</if>-->
+<!--		<if test="status != null and status != ''">-->
+<!--            AND status = #{status}-->
+<!--		</if>-->
+<!--		order by m.parent_id, m.order_num-->
+<!--	</select>-->
+
+	<select id="selectMenuListByUserId" parameterType="com.ruoyi.project.system.domain.SysMenu" resultMap="SysMenuResult">
+		select distinct m.menu_id, m.parent_id, m.menu_name, m.path, m.component, m.visible, m.status, ifnull(m.perms,'') as perms, m.is_frame, m.menu_type, m.icon, m.order_num, m.create_time
+		from new_sys_menu m
+		left join new_sys_user_menu um on m.menu_id = um.menu_id
+		where um.user_id = #{params.userId}
+		<if test="menuName != null and menuName != ''">
+			AND menu_name like concat('%', #{menuName}, '%')
+		</if>
+		<if test="visible != null and visible != ''">
+			AND visible = #{visible}
+		</if>
+		<if test="status != null and status != ''">
+			AND status = #{status}
+		</if>
+		order by m.parent_id, m.order_num
 	</select>
-	
-	<select id="selectMenuById" parameterType="Long" resultMap="SysMenuResult">
+
+<!--    <select id="selectMenuTreeByUserId" parameterType="java.lang.Long" resultMap="SysMenuResult">-->
+<!--		select distinct m.menu_id, m.parent_id, m.menu_name, m.path, m.component, m.visible, m.status, ifnull(m.perms,'') as perms, m.is_frame, m.menu_type, m.icon, m.order_num, m.create_time-->
+<!--		from new_sys_menu m-->
+<!--			 left join new_sys_role_menu rm on m.menu_id = rm.menu_id-->
+<!--			 left join new_sys_user_role ur on rm.role_id = ur.role_id-->
+<!--			 left join new_sys_role ro on ur.role_id = ro.role_id-->
+<!--			 left join new_sys_user u on ur.user_id = u.user_id-->
+<!--		where u.user_id = #{userId} and m.menu_type in ('M', 'C') and m.status = 0  AND ro.status = 0-->
+<!--		order by m.parent_id, m.order_num-->
+<!--	</select>-->
+
+	<select id="selectMenuTreeByUserId" parameterType="java.lang.Long" resultMap="SysMenuResult">
+		select distinct m.menu_id, m.parent_id, m.menu_name, m.path, m.component, m.visible, m.status, ifnull(m.perms,'') as perms, m.is_frame, m.menu_type, m.icon, m.order_num, m.create_time
+		from new_sys_menu m
+			 left join new_sys_user_menu um on m.menu_id = um.menu_id
+			 left join new_sys_user u on um.user_id = u.user_id
+		where u.user_id = #{userId} and m.menu_type in ('M', 'C') and m.status = 0
+		order by m.parent_id, m.order_num
+	</select>
+
+	<select id="selectMenuListByRoleId" parameterType="java.lang.Long" resultType="java.lang.Integer">
+		select m.menu_id, m.parent_id
+		from new_sys_menu m
+            left join new_sys_role_menu rm on m.menu_id = rm.menu_id
+        where rm.role_id = #{roleId}
+        	and m.menu_id not in (select m.parent_id from new_sys_menu m inner join new_sys_role_menu rm on m.menu_id = rm.menu_id and rm.role_id = #{roleId})
+		order by m.parent_id, m.order_num
+	</select>
+
+	<select id="selectMenuListByUserIdNew" parameterType="java.lang.Long" resultType="java.lang.Integer">
+		select m.menu_id, m.parent_id
+		from new_sys_menu m
+            left join new_sys_user_menu um on m.menu_id = um.menu_id
+        where um.user_id = #{userId}
+        	and m.menu_id not in (select m.parent_id from new_sys_menu m inner join new_sys_user_menu um on m.menu_id = um.menu_id and um.user_id = #{userId})
+		order by m.parent_id, m.order_num
+	</select>
+
+	<select id="selectMenuPerms" resultType="java.lang.String">
+		select distinct m.perms
+		from new_sys_menu m
+			 left join new_sys_role_menu rm on m.menu_id = rm.menu_id
+			 left join new_sys_user_role ur on rm.role_id = ur.role_id
+	</select>
+
+<!--	<select id="selectMenuPermsByUserId" parameterType="java.lang.Long" resultType="java.lang.String">-->
+<!--		select distinct m.perms-->
+<!--		from new_sys_menu m-->
+<!--			 left join new_sys_role_menu rm on m.menu_id = rm.menu_id-->
+<!--			 left join new_sys_user_role ur on rm.role_id = ur.role_id-->
+<!--			 left join new_sys_role r on r.role_id = ur.role_id-->
+<!--		where m.status = '0' and r.status = '0' and ur.user_id = #{userId}-->
+<!--	</select>-->
+
+	<select id="selectMenuPermsByUserId" parameterType="java.lang.Long" resultType="java.lang.String">
+		select distinct m.perms
+		from new_sys_menu m
+		left join new_sys_user_menu um on m.menu_id = um.menu_id
+		where m.status = '0' and um.user_id = #{userId}
+	</select>
+
+	<select id="selectMenuById" parameterType="java.lang.Long" resultMap="SysMenuResult">
 		<include refid="selectMenuVo"/>
 		where menu_id = #{menuId}
 	</select>
-	
-	<select id="hasChildByMenuId" resultType="Integer">
-	    select count(1) from sys_menu where parent_id = #{menuId}  
+
+	<select id="hasChildByMenuId" resultType="java.lang.Integer">
+	    select count(1) from new_sys_menu where parent_id = #{menuId}
 	</select>
-	
-	<select id="checkMenuNameUnique" parameterType="SysMenu" resultMap="SysMenuResult">
+
+	<select id="checkMenuNameUnique" parameterType="com.ruoyi.project.system.domain.SysMenu" resultMap="SysMenuResult">
 		<include refid="selectMenuVo"/>
 		where menu_name=#{menuName} and parent_id = #{parentId}
 	</select>
-	
-	<update id="updateMenu" parameterType="SysMenu">
-		update sys_menu
+
+	<update id="updateMenu" parameterType="com.ruoyi.project.system.domain.SysMenu">
+		update new_sys_menu
 		<set>
 			<if test="menuName != null and menuName != ''">menu_name = #{menuName},</if>
 			<if test="parentId != null">parent_id = #{parentId},</if>
@@ -142,8 +184,8 @@
 		where menu_id = #{menuId}
 	</update>
 
-	<insert id="insertMenu" parameterType="SysMenu">
-		insert into sys_menu(
+	<insert id="insertMenu" parameterType="com.ruoyi.project.system.domain.SysMenu">
+		insert into new_sys_menu(
 		<if test="menuId != null and menuId != 0">menu_id,</if>
 		<if test="parentId != null and parentId != 0">parent_id,</if>
 		<if test="menuName != null and menuName != ''">menu_name,</if>
@@ -177,9 +219,9 @@
 		sysdate()
 		)
 	</insert>
-	
-	<delete id="deleteMenuById" parameterType="Long">
-	    delete from sys_menu where menu_id = #{menuId}
+
+	<delete id="deleteMenuById" parameterType="java.lang.Long">
+	    delete from new_sys_menu where menu_id = #{menuId}
 	</delete>
 
 </mapper> 

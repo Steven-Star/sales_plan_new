@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.tek.mapper.NewTekCountryCodeMapper">
+
+    <resultMap type="com.ruoyi.project.tek.domain.NewTekCountryCode" id="NewTekCountryCodeResult">
+        <id     property="id"     column="id"     />
+        <result property="chineseName"   column="chinese_name"   />
+        <result property="englishName"   column="english_name"   />
+        <result property="code"   column="code"   />
+        <result property="countrySortId"   column="country_sort_id"   />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"   column="create_by"   />
+        <result property="createTime" column="create_time" />
+        <result property="updateBy"   column="update_by"   />
+        <result property="updateTime" column="update_time" />
+        <result property="remark" column="remark" />
+    </resultMap>
+
+    <select id="queryNewTekCountryCodeAll" resultMap="NewTekCountryCodeResult">
+        select * from new_tek_country_code
+            where 1=1
+            <if test="_parameter != null and _parameter !=''">
+               and code in (#{_parameter})
+            </if>
+            and del_flag != '2'
+        order by country_sort_id,code asc
+    </select>
+
+    <select id="queryNewTekCountryCodeAllForPermission" resultMap="NewTekCountryCodeResult">
+        select * from new_tek_country_code
+        where 1=1
+        <if test="countryNameList != null">
+            and code in
+            <foreach item="countryNameList" index="index" collection="countryNameList"
+                     open="(" separator="," close=")"> #{countryNameList}</foreach>
+        </if>
+        and del_flag != '2'
+        order by country_sort_id,code asc
+    </select>
+
+    <select id="getNewTekCountryCodeById" resultMap="NewTekCountryCodeResult">
+        select * from new_tek_country_code where id = #{id}
+    </select>
+
+    <select id="getCountryCodeByCode" resultMap="NewTekCountryCodeResult">
+        select * from new_tek_country_code where code = #{code}
+    </select>
+
+</mapper>

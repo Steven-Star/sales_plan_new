@@ -123,4 +123,9 @@ public class Constants
      * 资源映射路径 前缀
      */
     public static final String RESOURCE_PREFIX = "/profile";
+
+    /**
+     * 服务商
+     * */
+    public static final String SERVER_PROVIDER = "server_provider";
 }

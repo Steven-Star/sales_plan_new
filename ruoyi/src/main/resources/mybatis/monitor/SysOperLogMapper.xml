@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.project.monitor.mapper.SysOperLogMapper">
 
-	<resultMap type="SysOperLog" id="SysOperLogResult">
+	<resultMap type="com.ruoyi.project.monitor.domain.SysOperLog" id="SysOperLogResult">
 		<id     property="operId"         column="oper_id"        />
 		<result property="title"          column="title"          />
 		<result property="businessType"   column="business_type"  />
@@ -25,15 +25,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<sql id="selectOperLogVo">
         select oper_id, title, business_type, method, request_method, operator_type, oper_name, dept_name, oper_url, oper_ip, oper_location, oper_param, json_result, status, error_msg, oper_time
-        from sys_oper_log
+        from new_sys_oper_log
     </sql>
     
-	<insert id="insertOperlog" parameterType="SysOperLog">
-		insert into sys_oper_log(title, business_type, method, request_method, operator_type, oper_name, dept_name, oper_url, oper_ip, oper_location, oper_param, json_result, status, error_msg, oper_time)
+	<insert id="insertOperlog" parameterType="com.ruoyi.project.monitor.domain.SysOperLog">
+		insert into new_sys_oper_log(title, business_type, method, request_method, operator_type, oper_name, dept_name, oper_url, oper_ip, oper_location, oper_param, json_result, status, error_msg, oper_time)
         values (#{title}, #{businessType}, #{method}, #{requestMethod}, #{operatorType}, #{operName}, #{deptName}, #{operUrl}, #{operIp}, #{operLocation}, #{operParam}, #{jsonResult}, #{status}, #{errorMsg}, sysdate())
 	</insert>
 	
-	<select id="selectOperLogList" parameterType="SysOperLog" resultMap="SysOperLogResult">
+	<select id="selectOperLogList" parameterType="com.ruoyi.project.monitor.domain.SysOperLog" resultMap="SysOperLogResult">
 		<include refid="selectOperLogVo"/>
 		<where>
 			<if test="title != null and title != ''">
@@ -64,20 +64,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		order by oper_id desc
 	</select>
 	
-	<delete id="deleteOperLogByIds" parameterType="Long">
- 		delete from sys_oper_log where oper_id in
+	<delete id="deleteOperLogByIds" parameterType="java.lang.Long">
+ 		delete from new_sys_oper_log where oper_id in
  		<foreach collection="array" item="operId" open="(" separator="," close=")">
  			#{operId}
         </foreach> 
  	</delete>
  	
- 	<select id="selectOperLogById" parameterType="Long" resultMap="SysOperLogResult">
+ 	<select id="selectOperLogById" parameterType="java.lang.Long" resultMap="SysOperLogResult">
 		<include refid="selectOperLogVo"/>
 		where oper_id = #{operId}
 	</select>
 	
 	<update id="cleanOperLog">
-        truncate table sys_oper_log
+        truncate table new_sys_oper_log
     </update>
 
 </mapper> 

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.tek.mapper.NewTekCategoryMapper">
+
+    <resultMap type="com.ruoyi.project.tek.domain.NewTekCategory" id="NewTekCategoryResult">
+        <id     property="id"     column="id"     />
+        <result property="categoryName"   column="category_name"   />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"   column="create_by"   />
+        <result property="createTime" column="create_time" />
+        <result property="updateBy"   column="update_by"   />
+        <result property="updateTime" column="update_time" />
+        <result property="remark" column="remark" />
+        <result property="disposeGroupId" column="dispose_group_id" />
+    </resultMap>
+
+    <insert id="insertNewTekCategory" parameterType="com.ruoyi.project.tek.domain.NewTekCategory" useGeneratedKeys="true" keyProperty="id">
+        insert into new_tek_category(
+        <if test="categoryName != null and categoryName != ''">category_name,</if>
+        <if test="delFlag != null and delFlag != ''">del_flag,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        <if test="updateBy != null and updateBy != ''">update_by,</if>
+        <if test="remark != null and remark != ''">remark,</if>
+        <if test="disposeGroupId != null and disposeGroupId != ''">dispose_group_id,</if>
+        create_time,update_time
+        )values(
+        <if test="categoryName != null and categoryName != ''">#{categoryName},</if>
+        <if test="delFlag != null and delFlag != ''">#{delFlag},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        <if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+        <if test="remark != null and remark != ''">#{remark},</if>
+        <if test="disposeGroupId != null and disposeGroupId != ''">#{disposeGroupId},</if>
+        sysdate(),sysdate()
+        )
+    </insert>
+
+    <update id="updateNewTekCategory" parameterType="com.ruoyi.project.tek.domain.NewTekCategory">
+        update new_tek_category
+        <set>
+            <if test="categoryName != null and categoryName != ''">category_name = #{categoryName},</if>
+            <if test="delFlag != null and delFlag != ''">del_flag = #{delFlag},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="remark != null and remark != ''">remark = #{remark},</if>
+            <if test="disposeGroupId != null and disposeGroupId != ''">dispose_group_id = #{disposeGroupId},</if>
+            update_time = sysdate()
+        </set>
+        where id = #{id}
+    </update>
+
+<!--    批量删除-->
+    <update id="deleteCategoryByIds" parameterType="java.lang.Long">
+        update new_tek_category set del_flag = '2' where id in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <select id="queryNewTekCategoryAll" resultMap="NewTekCategoryResult" parameterType="com.ruoyi.project.tek.request.QueryCategoryReq">
+        select * from new_tek_category where 1=1
+         <if test="categoryName != null and categoryName !=''">
+             and category_name like concat('%',#{categoryName},'%')
+         </if>
+        <if test="disposeGroupId != null and disposeGroupId !=''">
+            and dispose_group_id = #{disposeGroupId}
+        </if>
+         and del_flag != '2'
+         order by update_time desc
+    </select>
+
+    <select id="getNewTekCategoryById" resultMap="NewTekCategoryResult">
+        select * from new_tek_category where id = #{id}
+    </select>
+    <select id="getAllCategory" resultMap="NewTekCategoryResult">
+        select * from new_tek_category where 1=1 and del_flag != '2' order by update_time desc
+    </select>
+
+
+    <select id="queryNewTekCategoryByName" resultMap="NewTekCategoryResult" parameterType="java.lang.String">
+        select * from new_tek_category where 1=1
+        <if test="_parameter != null and _parameter !=''">
+            and category_name = #{_parameter}
+        </if>
+        and del_flag != '2'
+        order by update_time desc
+    </select>
+
+</mapper>

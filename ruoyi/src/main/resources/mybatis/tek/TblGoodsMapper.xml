@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.tek.mapper.TblGoodsMapper">
+    <resultMap type="com.ruoyi.project.tek.domain.TblGoods" id="TblGoodsResult">
+        <id     property="id"     column="id"     />
+        <result property="salesPlatform"   column="sales_platform"   />
+        <result property="site"  column="site"   />
+        <result property="sku"   column="sku"   />
+        <result property="itemAttributesTitle"   column="item_attributes_title"   />
+    </resultMap>
+
+    <resultMap type="com.ruoyi.project.tek.domain.TblGoods" id="TblGoodsResultAll">
+        <id     property="id"     column="id"     />
+        <result property="salesPlatform"   column="sales_platform"   />
+        <result property="site"  column="site"   />
+        <result property="sku"   column="sku"   />
+        <result property="itemAttributesTitle"   column="item_attributes_title"   />
+        <result property="relationships"   column="relationships"   />
+        <result property="salesRankings"   column="sales_rankings"   />
+        <result property="identifiersMarketplaceAsinMarketplaceId"   column="identifiers_marketplace_asin_marketplace_id"   />
+        <result property="identifiersMarketplaceAsinAsin"   column="identifiers_marketplace_asin_asin"   />
+        <result property="itemAttributesLabel"   column="item_attributes_label"   />
+        <result property="itemAttributesManufacturer"   column="item_attributes_manufacturer"   />
+        <result property="itemAttributesPartNumber"   column="item_attributes_part_number"   />
+        <result property="itemAttributesNumberOfitems"   column="item_attributes_number_ofitems"   />
+        <result property="itemAttributesReleaseDate"   column="item_attributes_release_date"   />
+        <result property="itemAttributesUpdateDate"   column="item_attributes_update_date"   />
+        <result property="itemAttributesMaterialType"   column="item_attributes_material_type"   />
+        <result property="itemAttributesProductTypeName"   column="item_attributes_product_type_name"   />
+        <result property="itemAttributesSmallImageUrl"   column="item_attributes_small_image_url"   />
+        <result property="itemAttributesListPriceAmount"   column="item_attributes_list_price_amount"   />
+        <result property="itemAttributesListPriceCurrencyCode"   column="item_attributes_list_price_currency_code"   />
+        <result property="itemAttributesWarranty"   column="item_attributes_warranty"   />
+        <result property="costOf"   column="cost_of"   />
+        <result property="badReview"   column="bad_review"   />
+        <result property="goodReview"   column="good_review"   />
+        <result property="dayOfEvent"   column="day_of_event"   />
+        <result property="goodsCondition"   column="goods_condition"   />
+        <result property="inStockSupplyQuantity"   column="in_stock_supply_quantity"   />
+        <result property="productCategoryId"   column="product_category_id"   />
+        <result property="productCategoryName"   column="product_category_name"   />
+        <result property="shopNo"   column="shop_no"   />
+        <result property="partFlag"   column="part_flag"   />
+        <result property="offDate"   column="off_date"   />
+        <result property="onDate"   column="on_date"   />
+        <result property="briefName"   column="brief_name"   />
+    </resultMap>
+
+    <resultMap type="com.ruoyi.project.tek.vo.SalesPlanVO" id="SalesPlanVOResult">
+        <result     property="id"     column="id"     />
+        <result property="salesPlatform"   column="salesPlatform"   />
+        <result property="site"  column="site"   />
+        <result property="sku"   column="sku"   />
+        <result property="serviceProviderName"   column="serviceProviderName"   />
+        <result property="serviceProviderId"   column="serviceProviderId"   />
+        <result property="LOC"   column="LOC"   />
+        <result property="skuAndLoc"   column="skuAndLoc"   />
+    </resultMap>
+
+
+    <resultMap type="com.ruoyi.project.tek.vo.NewTekCalendarVO" id="NewTekCalendarVOResult">
+        <result property="sku"   column="sku"   />
+        <result property="productName"   column="productName"   />
+        <result property="categoryId"   column="categoryId"   />
+        <result property="categoryName"   column="categoryName"   />
+        <result property="modelId"   column="modelId"   />
+        <result property="modelName"   column="modelName"   />
+        <result property="disposeId"   column="disposeId"   />
+        <result property="disposeName"   column="disposeName"   />
+        <result property="customerName"   column="customerName"   />
+        <result property="modelSortId"   column="modelSortId"   />
+        <result property="disposeSortId"   column="disposeSortId"   />
+        <result property="disposeGroupId"   column="disposeGroupId"   />
+        <result property="msrpId"     column="msrpId"     />
+        <result property="customerId"   column="customerId"   />
+        <result property="sku"   column="sku"   />
+        <result property="msrp"   column="msrp"   />
+        <result property="currencyType"   column="currencyType"   />
+        <result property="currencyTypeWK"   column="currencyTypeWK"   />
+        <result property="validFromWK"   column="validFromWK"   />
+        <result property="validToWK"   column="validToWK"   />
+        <result property="country"   column="country"   />
+        <result property="sellingPrice"   column="sellingPrice"   />
+        <result property="sellingPriceUSD"   column="sellingPriceUSD"   />
+        <result property="wk1Msrp"   column="wk1Msrp"   />
+        <result property="wk2Msrp"   column="wk2Msrp"   />
+        <result property="wk3Msrp"   column="wk3Msrp"   />
+        <result property="wk4Msrp"   column="wk4Msrp"   />
+        <result property="wk5Msrp"   column="wk5Msrp"   />
+        <result property="wk6Msrp"   column="wk6Msrp"   />
+        <result property="wk7Msrp"   column="wk7Msrp"   />
+        <result property="wk8Msrp"   column="wk8Msrp"   />
+        <result property="wk9Msrp"   column="wk9Msrp"   />
+        <result property="wk10Msrp"   column="wk10Msrp"   />
+        <result property="wk11Msrp"   column="wk11Msrp"   />
+        <result property="wk12Msrp"   column="wk12Msrp"   />
+        <result property="wk13Msrp"   column="wk13Msrp"   />
+        <result property="wk14Msrp"   column="wk14Msrp"   />
+        <result property="wk15Msrp"   column="wk15Msrp"   />
+        <result property="wk16Msrp"   column="wk16Msrp"   />
+        <result property="wk17Msrp"   column="wk17Msrp"   />
+        <result property="wk18Msrp"   column="wk18Msrp"   />
+        <result property="wk19Msrp"   column="wk19Msrp"   />
+        <result property="wk20Msrp"   column="wk20Msrp"   />
+        <result property="wk21Msrp"   column="wk21Msrp"   />
+        <result property="wk22Msrp"   column="wk22Msrp"   />
+        <result property="wk23Msrp"   column="wk23Msrp"   />
+        <result property="wk24Msrp"   column="wk24Msrp"   />
+        <result property="wk25Msrp"   column="wk25Msrp"   />
+        <result property="wk26Msrp"   column="wk26Msrp"   />
+        <result property="wk27Msrp"   column="wk27Msrp"   />
+        <result property="wk28Msrp"   column="wk28Msrp"   />
+        <result property="wk29Msrp"   column="wk29Msrp"   />
+        <result property="wk30Msrp"   column="wk30Msrp"   />
+        <result property="wk31Msrp"   column="wk31Msrp"   />
+        <result property="wk32Msrp"   column="wk32Msrp"   />
+        <result property="wk33Msrp"   column="wk33Msrp"   />
+        <result property="wk34Msrp"   column="wk34Msrp"   />
+        <result property="wk35Msrp"   column="wk35Msrp"   />
+        <result property="wk36Msrp"   column="wk36Msrp"   />
+        <result property="wk37Msrp"   column="wk37Msrp"   />
+        <result property="wk38Msrp"   column="wk38Msrp"   />
+        <result property="wk39Msrp"   column="wk39Msrp"   />
+        <result property="wk40Msrp"   column="wk40Msrp"   />
+        <result property="wk41Msrp"   column="wk41Msrp"   />
+        <result property="wk42Msrp"   column="wk42Msrp"   />
+        <result property="wk43Msrp"   column="wk43Msrp"   />
+        <result property="wk44Msrp"   column="wk44Msrp"   />
+        <result property="wk45Msrp"   column="wk45Msrp"   />
+        <result property="wk46Msrp"   column="wk46Msrp"   />
+        <result property="wk47Msrp"   column="wk47Msrp"   />
+        <result property="wk48Msrp"   column="wk48Msrp"   />
+        <result property="wk49Msrp"   column="wk49Msrp"   />
+        <result property="wk50Msrp"   column="wk50Msrp"   />
+        <result property="wk51Msrp"   column="wk51Msrp"   />
+        <result property="wk52Msrp"   column="wk52Msrp"   />
+        <result property="wk53Msrp"   column="wk53Msrp"   />
+        <result property="delFlag"    column="delFlag"    />
+        <result property="createBy"   column="createBy"   />
+        <result property="createTime" column="createTime" />
+        <result property="updateBy"   column="updateBy"   />
+        <result property="updateTime" column="updateTime" />
+        <result property="remark" column="remark" />
+    </resultMap>
+
+<!--    根据sku倒序查询所有的产品信息-->
+    <select id="queryGoodsAll" resultMap="TblGoodsResult">
+                    SELECT
+                        id,sales_platform,site,sku,item_attributes_title
+                    FROM
+                        tbl_goods
+                    where 1=1 and sku != ''
+                    GROUP BY sku
+                    order by sku desc
+    </select>
+
+    <select id="getTblGoodsById" resultMap="TblGoodsResult">
+        select * from tbl_goods where id = #{id}
+    </select>
+
+    <select id="queryCalendarAllData" resultMap="NewTekCalendarVOResult" parameterType="com.ruoyi.project.tek.request.QueryCalendarReq">
+        SELECT
+        ntmw.*,ntmw.customer_id as customerId,ntmw.msrp_id as msrpId,ntmw.valid_from_wk as validFromWK,
+        ntmw.valid_to_wk as validToWK,ntmw.currency_type as currencyTypeWK,ntmw.country,
+        ntmw.selling_price as sellingPrice, ntmw.selling_price_usd as sellingPriceUSD,
+        ntc.category_name as categoryName,
+        ntmo.model_name as modelName,
+        ntd.dispose_name as disposeName,
+        ntpm.category_id as categoryId,
+        ntpm.model_id as modelId,
+        ntmo.model_sort_id as modelSortId,
+        ntpm.dispose_id as disposeId,
+        ntd.dispose_group_id as disposeGroupId,
+        ntd.dispose_sort_id as disposeSortId,
+        ntcc.customer_name as customerName,
+        ntmw.create_time as createTime
+        FROM
+        new_tek_msrp_wk AS ntmw
+        LEFT JOIN new_tek_product_model AS ntpm ON ntpm.sku = ntmw.sku
+        LEFT JOIN new_tek_category AS ntc ON ntc.id = ntpm.category_id
+        LEFT JOIN new_tek_model AS ntmo ON ntmo.id = ntpm.model_id
+        LEFT JOIN new_tek_dispose AS ntd ON ntd.id = ntpm.dispose_id
+        LEFT JOIN new_tek_customer AS ntcc ON ntmw.customer_id = ntcc.id
+        LEFT JOIN new_tek_dispose_group AS ntdg ON ntdg.id = ntd.dispose_group_id
+        WHERE
+        1 = 1
+        and ntmw.del_flag != '2'
+        <if test="customerName != null and customerName != ''">
+            and ntcc.customer_name like concat('%',#{customerName},'%')
+        </if>
+        <if test="sku != null and sku != ''">
+            and ntmw.sku like concat('%',#{sku},'%')
+        </if>
+        <if test="country != null and country != ''">
+            and ntmw.country like concat('%',#{country},'%')
+        </if>
+        <if test="year != null and year != ''">
+            and substring_index(ntmw.valid_from_wk,'-',1) &lt;= #{year}
+        </if>
+        <if test="year != null and year != ''">
+            and substring_index(ntmw.valid_to_wk,'-',1) &gt;= #{year}
+        </if>
+        <if test="modelName != null and modelName != ''">
+            and (ntmo.model_name like concat('%',#{modelName},'%') or ntd.dispose_name like concat('%',#{disposeName},'%'))
+        </if>
+        <if test="categoryId != null and categoryId != ''">
+            and ntc.id = #{categoryId}
+        </if>
+        <if test="modelId != null and modelId != ''">
+            and ntmo.id = #{modelId}
+        </if>
+        <if test="disposeSortId != null and disposeSortId != ''">
+            and ntd.dispose_sort_id = #{disposeSortId}
+        </if>
+        <if test="modelSortId != null and modelSortId != ''">
+            and ntmo.model_sort_id = #{modelSortId}
+        </if>
+        ORDER BY
+        ntc.category_name,
+        ntmo.model_name,
+        ntd.dispose_name ASC
+    </select>
+
+    <select id="queryCalendarAllDataForPermission" resultMap="NewTekCalendarVOResult" parameterType="com.ruoyi.project.tek.request.QueryCalendarReq">
+        SELECT
+        ntmw.*,ntmw.customer_id as customerId,ntmw.msrp_id as msrpId,ntmw.valid_from_wk as validFromWK,
+        ntmw.valid_to_wk as validToWK,ntmw.currency_type as currencyTypeWK,ntmw.country,
+        ntmw.selling_price as sellingPrice, ntmw.selling_price_usd as sellingPriceUSD,
+        ntc.category_name as categoryName,
+        ntmo.model_name as modelName,
+        ntd.dispose_name as disposeName,
+        ntpm.category_id as categoryId,
+        ntpm.model_id as modelId,
+        ntmo.model_sort_id as modelSortId,
+        ntpm.dispose_id as disposeId,
+        ntd.dispose_group_id as disposeGroupId,
+        ntd.dispose_sort_id as disposeSortId,
+        ntcc.customer_name as customerName,
+        ntmw.create_time as createTime
+        FROM
+        new_tek_msrp_wk AS ntmw
+        LEFT JOIN new_tek_product_model AS ntpm ON ntpm.sku = ntmw.sku
+        LEFT JOIN new_tek_category AS ntc ON ntc.id = ntpm.category_id
+        LEFT JOIN new_tek_model AS ntmo ON ntmo.id = ntpm.model_id
+        LEFT JOIN new_tek_dispose AS ntd ON ntd.id = ntpm.dispose_id
+        LEFT JOIN new_tek_customer AS ntcc ON ntmw.customer_id = ntcc.id
+        LEFT JOIN new_tek_dispose_group AS ntdg ON ntdg.id = ntd.dispose_group_id
+        WHERE
+        1 = 1
+        and ntmw.del_flag != '2'
+        <if test="countryNameList != null">
+            and ntmw.country in
+            <foreach item="countryNameList" index="index" collection="countryNameList"
+                     open="(" separator="," close=")"> #{countryNameList}</foreach>
+        </if>
+        <if test="customerList != null">
+            and ntcc.customer_name in
+            <foreach item="customerList" index="index" collection="customerList"
+                     open="(" separator="," close=")"> #{customerList}</foreach>
+        </if>
+        <if test="customerName != null and customerName != ''">
+            and ntcc.customer_name like concat('%',#{customerName},'%')
+        </if>
+        <if test="sku != null and sku != ''">
+            and ntmw.sku like concat('%',#{sku},'%')
+        </if>
+        <if test="country != null and country != ''">
+            and ntmw.country like concat('%',#{country},'%')
+        </if>
+        <if test="year != null and year != ''">
+            and substring_index(ntmw.valid_from_wk,'-',1) &lt;= #{year}
+        </if>
+        <if test="year != null and year != ''">
+            and substring_index(ntmw.valid_to_wk,'-',1) &gt;= #{year}
+        </if>
+        <if test="modelName != null and modelName != ''">
+            and (ntmo.model_name like concat('%',#{modelName},'%') or ntd.dispose_name like concat('%',#{disposeName},'%'))
+        </if>
+        <if test="categoryId != null and categoryId != ''">
+            and ntc.id = #{categoryId}
+        </if>
+        <if test="modelId != null and modelId != ''">
+            and ntmo.id = #{modelId}
+        </if>
+        <if test="disposeSortId != null and disposeSortId != ''">
+            and ntd.dispose_sort_id = #{disposeSortId}
+        </if>
+        <if test="modelSortId != null and modelSortId != ''">
+            and ntmo.model_sort_id = #{modelSortId}
+        </if>
+        ORDER BY
+        ntc.category_name,
+        ntmo.model_name,
+        ntd.dispose_name ASC
+    </select>
+
+<!--    销售预测查询所有的产品-->
+    <select id="getSalesPlanGoodsAll" resultMap="SalesPlanVOResult">
+                        SELECT
+                tg.sales_platform as salesPlatform,
+                tg.site,
+                tg.sku,
+                tg.item_attributes_title as productName,
+                t1. NAME as serviceProviderName,
+                t1.`value` as serviceProviderId,
+                CASE t1.`value`
+                     WHEN '1' THEN 'FBA'
+                     WHEN '2' THEN 'FBM'
+                             WHEN '31' THEN 'WHITEBOX TN-Normal'
+                             WHEN '32' THEN 'WHITEBOX NV-Normal'
+                             WHEN '33' THEN 'WHITEBOX MD-Normal'
+                             WHEN '35' THEN 'PRC-Normal'
+                             WHEN '11' THEN 'Lazada'
+                             WHEN '39' THEN 'INGRAM VANCOUVER-Normal'
+                             WHEN '34' THEN 'INGRAM TORONTO-Normal'
+                             WHEN '21' THEN 'eBay'
+            ELSE '其他' END AS LOC,
+            CONCAT(CONCAT(tg.site,',',tg.sku),',',t1.`value`) as skuAndLoc
+            FROM
+                tbl_goods AS tg
+            LEFT JOIN tek_sys_dict AS t1 ON tg.sales_platform = t1.groups_value
+            WHERE
+                t1.del_flag = 0
+            AND t1.type_code = 'server_provider'
+            AND t1. NAME NOT IN (
+                'US SEMI-DI DUMMY',
+                'PRC-Disposal',
+                'PRC-Recondition',
+                'PRC-Return'
+            )
+    </select>
+
+    <select id="getTblGoodsBySku" resultMap="TblGoodsResult">
+        select * from tbl_goods where sku = #{sku}
+    </select>
+
+</mapper>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.tek.mapper.NewTekCurrencyDataMapper">
+
+    <resultMap type="com.ruoyi.project.tek.domain.NewTekCurrencyData" id="NewTekCurrencyDataResult">
+        <id     property="id"     column="id"     />
+        <result property="fromCountry"   column="from_country"   />
+        <result property="toCountry"   column="to_country"   />
+        <result property="currency"   column="currency"   />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"   column="create_by"   />
+        <result property="createTime" column="create_time" />
+        <result property="updateBy"   column="update_by"   />
+        <result property="updateTime" column="update_time" />
+        <result property="remark" column="remark" />
+    </resultMap>
+    <insert id="insertNewTekCurrencyData" parameterType="java.util.ArrayList">
+        insert into new_tek_currency_data(from_country,to_country,currency,del_flag,create_by,create_time,
+        update_by,update_time,remark) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.fromCountry},#{item.toCountry},#{item.currency},#{item.delFlag},#{item.createBy},sysdate(),#{item.updateBy},sysdate(),#{item.remark})
+        </foreach>
+    </insert>
+
+    <delete id="deleteNewTekCurrencyDataAll">
+        delete from new_tek_currency_data
+    </delete>
+
+    <select id="queryNewTekCurrencyDataAll" resultMap="NewTekCurrencyDataResult">
+        select * from new_tek_currency_data
+        where 1=1
+         and del_flag != '2'
+         order by from_country asc
+    </select>
+
+    <select id="getNewTekCurrencyDataById" resultMap="NewTekCurrencyDataResult">
+        select * from new_tek_currency_data where id = #{id}
+    </select>
+
+    <select id="getCurrencyCodeByFromCountryAndToCountry" resultMap="NewTekCurrencyDataResult">
+        select * from new_tek_currency_data where 1=1
+        <if test="fromCountry != null and fromCountry != ''">
+            and from_country = #{fromCountry}
+        </if>
+        <if test="toCountry != null and toCountry != ''">
+            and to_country = #{toCountry}
+        </if>
+    </select>
+
+
+</mapper>

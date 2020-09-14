@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.tek.mapper.NewTekCurrencyCodeMapper">
+
+    <resultMap type="com.ruoyi.project.tek.domain.NewTekCurrencyCode" id="NewTekCurrencyCodeResult">
+        <id     property="id"     column="id"     />
+        <result property="country"   column="country"   />
+        <result property="currencyCode"   column="currency_code"   />
+        <result property="currencyName"   column="currency_name"   />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"   column="create_by"   />
+        <result property="createTime" column="create_time" />
+        <result property="updateBy"   column="update_by"   />
+        <result property="updateTime" column="update_time" />
+        <result property="remark" column="remark" />
+    </resultMap>
+
+    <select id="queryNewTekCurrencyCodeAll" resultMap="NewTekCurrencyCodeResult" parameterType="java.lang.String">
+        select * from new_tek_currency_code
+        where 1=1
+         <if test="_parameter != null and _parameter !=''">
+             and country like concat('%',#{_parameter},'%')
+         </if>
+         and del_flag != '2'
+         order by country asc
+    </select>
+
+    <select id="getNewTekCurrencyCodeById" resultMap="NewTekCurrencyCodeResult">
+        select * from new_tek_currency_code where id = #{id}
+    </select>
+
+    <select id="getCurrencyCodeByCountry" resultMap="NewTekCurrencyCodeResult">
+        select * from new_tek_currency_code where country = #{country} limit 1
+    </select>
+
+
+</mapper>

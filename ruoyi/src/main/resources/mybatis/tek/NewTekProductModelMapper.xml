@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.tek.mapper.NewTekProductModelMapper">
+
+    <resultMap type="com.ruoyi.project.tek.domain.NewTekProductModel" id="NewTekProductModelResult">
+        <id     property="id"     column="id"     />
+        <result property="productId"   column="product_id"   />
+        <result property="modelId"   column="model_id"   />
+        <result property="categoryId"   column="category_id"   />
+        <result property="disposeId"   column="dispose_id"   />
+        <result property="sku"   column="sku"   />
+        <result property="countryName"   column="country_name"   />
+        <result property="channelType"   column="channel_type"   />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"   column="create_by"   />
+        <result property="createTime" column="create_time" />
+        <result property="updateBy"   column="update_by"   />
+        <result property="updateTime" column="update_time" />
+        <result property="remark" column="remark" />
+        <result property="disposeGroupId" column="dispose_group_id" />
+    </resultMap>
+
+    <resultMap type="com.ruoyi.project.tek.vo.NewTekProductModelVO" id="NewTekProductModelVOResult">
+        <id     property="id"     column="id"     />
+        <result property="productId"   column="productId"   />
+        <result property="modelId"   column="modelId"   />
+        <result property="productName"   column="productName"   />
+        <result property="categoryId"   column="categoryId"   />
+        <result property="disposeId"   column="disposeId"   />
+        <result property="categoryName"   column="categoryName"   />
+        <result property="disposeName"   column="disposeName"   />
+        <result property="sku"   column="sku"   />
+        <result property="countryName"   column="countryName"   />
+        <result property="modelName"    column="modelName"    />
+        <result property="createDate"    column="createDate"    />
+        <result property="updateDate"    column="updateDate"    />
+        <result property="channelType"   column="channelType"   />
+        <result property="remark" column="remark" />
+    </resultMap>
+
+    <insert id="insertNewTekProductModel" parameterType="com.ruoyi.project.tek.domain.NewTekProductModel" useGeneratedKeys="true" keyProperty="id">
+        insert into new_tek_product_model(
+        <if test="productId != null and productId != ''">product_id,</if>
+        <if test="modelId != null and modelId != ''">model_id,</if>
+        <if test="categoryId != null and categoryId != ''">category_id,</if>
+        <if test="disposeId != null and disposeId != ''">dispose_id,</if>
+        <if test="sku != null and sku != ''">sku,</if>
+        <if test="countryName != null and countryName != ''">country_name,</if>
+        <if test="channelType != null and channelType != ''">channel_type,</if>
+        <if test="delFlag != null and delFlag != ''">del_flag,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        <if test="updateBy != null and updateBy != ''">update_by,</if>
+        <if test="remark != null and remark != ''">remark,</if>
+        create_time,update_time
+        )values(
+        <if test="productId != null and productId != ''">#{productId},</if>
+        <if test="modelId != null and modelId != ''">#{modelId},</if>
+        <if test="categoryId != null and categoryId != ''">#{categoryId},</if>
+        <if test="disposeId != null and disposeId != ''">#{disposeId},</if>
+        <if test="sku != null and sku != ''">#{sku},</if>
+        <if test="countryName != null and countryName != ''">#{countryName},</if>
+        <if test="channelType != null and channelType != ''">#{channelType},</if>
+        <if test="delFlag != null and delFlag != ''">#{delFlag},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        <if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+        <if test="remark != null and remark != ''">#{remark},</if>
+        sysdate(),sysdate()
+        )
+    </insert>
+
+
+    <update id="updateNewTekProductModelById" parameterType="com.ruoyi.project.tek.domain.NewTekProductModel">
+        update new_tek_product_model
+        <set>
+            <if test="productId != null and productId != ''">product_id = #{productId},</if>
+            <if test="categoryId != null and categoryId != ''">category_id = #{categoryId},</if>
+            <if test="modelId != null and modelId != ''">model_id = #{modelId},</if>
+            <if test="disposeId != null and disposeId != ''">dispose_id = #{disposeId},</if>
+            <if test="sku != null and sku != ''">sku = #{sku},</if>
+            <if test="countryName != null and countryName != ''">country_name = #{countryName},</if>
+            <if test="channelType != null and channelType != ''">channel_type = #{channelType},</if>
+            <if test="delFlag != null and delFlag != ''">del_flag = #{delFlag},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="remark != null and remark != ''">remark = #{remark},</if>
+            update_time = sysdate()
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="deleteProductModelByIds" parameterType="java.lang.Long">
+        update new_tek_product_model set del_flag = '2' where id in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+
+    <select id="getNewTekProductModelByModelId" resultMap="NewTekProductModelResult">
+        select * from new_tek_product_model where model_id =#{modelId} order by update_time desc
+    </select>
+
+<!--    产品关联系列列表-->
+    <select id="getNewTekProductModel" resultMap="NewTekProductModelVOResult" parameterType="com.ruoyi.project.tek.request.QueryProductModelReq">
+            SELECT
+                        tg.id as productId,
+                        tg.sales_platform,
+                        site,
+                        sku,
+                        item_attributes_title as productName,
+                    (
+                        SELECT
+                            ntm.model_name
+                        FROM
+                            new_tek_model AS ntm
+                        WHERE
+                            ntm.id = (
+                                SELECT
+                                    ntpm.model_id
+                                FROM
+                                    new_tek_product_model AS ntpm
+                                WHERE
+                                    ntpm.product_id = tg.id
+                            )
+                    ) AS modelName,
+                        (
+                        SELECT
+                        ntm.id
+                        FROM
+                        new_tek_model AS ntm
+                        WHERE
+                        ntm.id = (
+                        SELECT
+                        ntpm.model_id
+                        FROM
+                        new_tek_product_model AS ntpm
+                        WHERE
+                        ntpm.product_id = tg.id
+                            )
+                        ) AS modelId
+            FROM
+                tbl_goods AS tg
+            GROUP BY
+                tg.sku
+            having 1 = 1
+            <if test="sku != null and sku !=''">
+                and sku like concat('%','#{sku}','%')
+            </if>
+        <if test="productName != null and productName !=''">
+            and productName like concat('%','#{productName}','%')
+        </if>
+        <if test="modelName != null and modelName !=''">
+            and modelName like concat('%','#{modelName}','%')
+        </if>
+            order by tg.sku desc
+    </select>
+
+    <select id="getNewTekProductModelByProductId" resultMap="NewTekProductModelVOResult">
+        select ntpm.id,ntpm.product_id as productId,ntpm.model_id as modelId,ntpm.channel_type as channelType,
+        ntpm.sku,ntm.model_name as modelName,ntpm.country_name as countryName,ntpm.create_time as createTime,ntpm.update_time as updateTime
+        from new_tek_product_model as ntpm
+        left join
+        new_tek_model as ntm
+        on ntpm.model_id = ntm.id
+        where ntpm.product_id = #{productId}
+    </select>
+
+    <select id="getNewTekProductModelForPage" resultMap="NewTekProductModelVOResult">
+        select id,sku, product_id as productId, category_id as categoryId,model_id as modelId,
+        dispose_id as disposeId,country_name as countryName,channel_type as channelType,
+        remark,create_time as createDate,update_time as updateDate,create_by as createBy,update_by as updateBy
+         from new_tek_product_model
+         where 1=1
+         <if test="countryName != null and countryName != ''">
+             and country_name like concat('%',#{countryName},'%')
+         </if>
+        <if test="sku != null and sku != ''">
+            and sku like concat('%',#{sku},'%')
+        </if>
+        <if test="categoryId != null and categoryId != ''">
+            and category_id = #{categoryId}
+        </if>
+        <if test="modelId != null and modelId != ''">
+            and model_id = #{modelId}
+        </if>
+        <if test="disposeId != null and disposeId != ''">
+            and dispose_id = #{disposeId}
+        </if>
+        <if test="channelType != null and channelType != ''">
+            and channel_type = #{channelType}
+        </if>
+         and del_flag != '2'
+         order by update_time desc
+    </select>
+
+    <select id="getNewTekProductModelForPagePermission" resultMap="NewTekProductModelVOResult">
+        select id,sku, product_id as productId, category_id as categoryId,model_id as modelId,
+        dispose_id as disposeId,country_name as countryName,channel_type as channelType,
+        remark,create_time as createDate,update_time as updateDate,create_by as createBy,update_by as updateBy
+        from new_tek_product_model
+        where 1=1
+        <if test="countryNameList != null">
+            and country_name in
+            <foreach item="countryNameList" index="index" collection="countryNameList"
+                     open="(" separator="," close=")"> #{countryNameList}</foreach>
+        </if>
+        <if test="sku != null and sku != ''">
+            and sku like concat('%',#{sku},'%')
+        </if>
+        <if test="categoryId != null and categoryId != ''">
+            and category_id = #{categoryId}
+        </if>
+        <if test="modelId != null and modelId != ''">
+            and model_id = #{modelId}
+        </if>
+        <if test="disposeId != null and disposeId != ''">
+            and dispose_id = #{disposeId}
+        </if>
+        <if test="channelType != null and channelType != ''">
+            and channel_type = #{channelType}
+        </if>
+        and del_flag != '2'
+        order by update_time desc
+    </select>
+
+    <select id="getNewTekProductModelById" resultMap="NewTekProductModelResult">
+        select  * from new_tek_product_model where id = #{id}
+    </select>
+
+    <select id="getProductModelByCategoryAndModelAndDisposeSortId" resultMap="NewTekProductModelResult">
+        SELECT
+        ntpm.id,ntpm.sku, ntpm.product_id, ntpm.category_id,ntpm.model_id,
+        ntpm.dispose_id,ntpm.country_name,ntpm.channel_type,
+        ntpm.remark,ntpm.create_time,ntpm.update_time,ntpm.create_by,ntpm.update_by,
+        ntd.dispose_group_id
+        FROM
+        new_tek_product_model AS ntpm
+        LEFT JOIN new_tek_category AS ntc ON ntpm.category_id = ntc.id
+        LEFT JOIN new_tek_model AS ntm ON ntpm.model_id = ntm.id
+        LEFT JOIN new_tek_dispose AS ntd ON ntpm.dispose_id = ntd.id
+        LEFT JOIN new_tek_dispose_group AS ntdg ON ntdg.id = ntd.dispose_group_id
+        WHERE
+        1 = 1
+        <if test="categoryId != null and categoryId != ''">
+           and ntpm.category_id = #{categoryId}
+        </if>
+        <if test="modelId != null and modelId != ''">
+           and ntpm.model_id = #{modelId}
+        </if>
+        <if test="modelSortId != null and modelSortId != ''">
+            and ntm.model_sort_id = #{modelSortId}
+        </if>
+        <if test="disposeId != null and disposeId != ''">
+            and ntpm.dispose_id = #{disposeId}
+        </if>
+        <if test="disposeSortId != null and disposeSortId != ''">
+           and ntd.dispose_sort_id = #{disposeSortId}
+        </if>
+        <if test="countryName != null and countryName != ''">
+            and ntpm.country_name = #{countryName}
+        </if>
+        <if test="sku != null and sku != ''">
+            and ntpm.sku = #{sku}
+        </if>
+        <if test="channelType != null and channelType != ''">
+            and ntpm.channel_type = #{channelType}
+        </if>
+    </select>
+
+    <select id="getProductModelBySKU" resultMap="NewTekProductModelResult">
+        select *
+        from new_tek_product_model
+        where 1=1
+        <if test="_parameter != null and _parameter != ''">
+            and sku = #{_parameter}
+        </if>
+        and del_flag != '2'
+        order by update_time desc
+    </select>
+
+    <select id="getAllCountry" resultMap="NewTekProductModelResult">
+        select id,country_name from new_tek_product_model
+        where del_flag != '2'
+        group by country_name
+    </select>
+
+</mapper>

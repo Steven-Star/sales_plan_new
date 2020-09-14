@@ -68,8 +68,7 @@ public class SysMenuController extends BaseController
      * 获取菜单下拉树列表
      */
     @GetMapping("/treeselect")
-    public AjaxResult treeselect(SysMenu menu)
-    {
+    public AjaxResult treeselect(SysMenu menu) {
         LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
         Long userId = loginUser.getUser().getUserId();
         List<SysMenu> menus = menuService.selectMenuList(menu, userId);
@@ -86,6 +85,20 @@ public class SysMenuController extends BaseController
         List<SysMenu> menus = menuService.selectMenuList(loginUser.getUser().getUserId());
         AjaxResult ajax = AjaxResult.success();
         ajax.put("checkedKeys", menuService.selectMenuListByRoleId(roleId));
+        ajax.put("menus", menuService.buildMenuTreeSelect(menus));
+        return ajax;
+    }
+
+    /**
+     * 加载对应用户菜单列表树
+     */
+    @GetMapping(value = "/userMenuTreeselect/{userId}")
+    public AjaxResult userMenuTreeselect(@PathVariable("userId") Long userId)
+    {
+        LoginUser loginUser = tokenService.getLoginUser(ServletUtils.getRequest());
+        List<SysMenu> menus = menuService.selectMenuList(loginUser.getUser().getUserId());
+        AjaxResult ajax = AjaxResult.success();
+        ajax.put("checkedKeys", menuService.selectMenuListByUserIdNew(userId));
         ajax.put("menus", menuService.buildMenuTreeSelect(menus));
         return ajax;
     }

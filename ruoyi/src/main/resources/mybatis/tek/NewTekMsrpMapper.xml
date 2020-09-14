@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.tek.mapper.NewTekMsrpMapper">
+
+    <resultMap type="com.ruoyi.project.tek.vo.NewTekMsrpVO" id="NewTekMsrpVO">
+        <id     property="id"     column="id"     />
+        <result property="customerId"   column="customerId"   />
+        <result property="productId"   column="productId"   />
+        <result property="sku"   column="sku"   />
+        <result property="msrp"   column="msrp"   />
+        <result property="country"   column="country"   />
+        <result property="validFrom"   column="valid_from"   />
+        <result property="validTo"   column="valid_to"   />
+        <result property="currencyType"   column="currency_type"   />
+        <result property="year"   column="year"   />
+        <result property="msrp_15"   column="msrp_15"   />
+        <result property="msrp_20"   column="msrp_20"   />
+        <result property="msrp_25"   column="msrp_25"   />
+        <result property="msrp_30"   column="msrp_30"   />
+        <result property="msrpOther"   column="msrp_other"   />
+        <result property="msrpOtherPrice"   column="msrp_other_price"   />
+        <result property="wk1Msrp"   column="wk1_msrp"   />
+        <result property="wk2Msrp"   column="wk2_msrp"   />
+        <result property="wk3Msrp"   column="wk3_msrp"   />
+        <result property="wk4Msrp"   column="wk4_msrp"   />
+        <result property="wk5Msrp"   column="wk5_msrp"   />
+        <result property="wk6Msrp"   column="wk6_msrp"   />
+        <result property="wk7Msrp"   column="wk7_msrp"   />
+        <result property="wk8Msrp"   column="wk8_msrp"   />
+        <result property="wk9Msrp"   column="wk9_msrp"   />
+        <result property="wk10Msrp"   column="wk10_msrp"   />
+        <result property="wk11Msrp"   column="wk11_msrp"   />
+        <result property="wk12Msrp"   column="wk12_msrp"   />
+        <result property="wk13Msrp"   column="wk13_msrp"   />
+        <result property="wk14Msrp"   column="wk14_msrp"   />
+        <result property="wk15Msrp"   column="wk15_msrp"   />
+        <result property="wk16Msrp"   column="wk16_msrp"   />
+        <result property="wk17Msrp"   column="wk17_msrp"   />
+        <result property="wk18Msrp"   column="wk18_msrp"   />
+        <result property="wk19Msrp"   column="wk19_msrp"   />
+        <result property="wk20Msrp"   column="wk20_msrp"   />
+        <result property="wk21Msrp"   column="wk21_msrp"   />
+        <result property="wk22Msrp"   column="wk22_msrp"   />
+        <result property="wk23Msrp"   column="wk23_msrp"   />
+        <result property="wk24Msrp"   column="wk24_msrp"   />
+        <result property="wk25Msrp"   column="wk25_msrp"   />
+        <result property="wk26Msrp"   column="wk26_msrp"   />
+        <result property="wk27Msrp"   column="wk27_msrp"   />
+        <result property="wk28Msrp"   column="wk28_msrp"   />
+        <result property="wk29Msrp"   column="wk29_msrp"   />
+        <result property="wk30Msrp"   column="wk30_msrp"   />
+        <result property="wk31Msrp"   column="wk31_msrp"   />
+        <result property="wk32Msrp"   column="wk32_msrp"   />
+        <result property="wk33Msrp"   column="wk33_msrp"   />
+        <result property="wk34Msrp"   column="wk34_msrp"   />
+        <result property="wk35Msrp"   column="wk35_msrp"   />
+        <result property="wk36Msrp"   column="wk36_msrp"   />
+        <result property="wk37Msrp"   column="wk37_msrp"   />
+        <result property="wk38Msrp"   column="wk38_msrp"   />
+        <result property="wk39Msrp"   column="wk39_msrp"   />
+        <result property="wk40Msrp"   column="wk40_msrp"   />
+        <result property="wk41Msrp"   column="wk41_msrp"   />
+        <result property="wk42Msrp"   column="wk42_msrp"   />
+        <result property="wk43Msrp"   column="wk43_msrp"   />
+        <result property="wk44Msrp"   column="wk44_msrp"   />
+        <result property="wk45Msrp"   column="wk45_msrp"   />
+        <result property="wk46Msrp"   column="wk46_msrp"   />
+        <result property="wk47Msrp"   column="wk47_msrp"   />
+        <result property="wk48Msrp"   column="wk48_msrp"   />
+        <result property="wk49Msrp"   column="wk49_msrp"   />
+        <result property="wk50Msrp"   column="wk50_msrp"   />
+        <result property="wk51Msrp"   column="wk51_msrp"   />
+        <result property="wk52Msrp"   column="wk52_msrp"   />
+        <result property="wk53Msrp"   column="wk53_msrp"   />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"   column="create_by"   />
+        <result property="createTime" column="create_time" />
+        <result property="updateBy"   column="update_by"   />
+        <result property="updateTime" column="update_time" />
+        <result property="remark" column="remark" />
+        <result property="productName"   column="productName"   />
+        <result property="customerName"   column="customerName"   />
+    </resultMap>
+
+    <resultMap type="com.ruoyi.project.tek.domain.NewTekMsrp" id="NewTekMsrpResult">
+        <id     property="id"     column="id"     />
+        <result property="customerId"   column="customer_id"   />
+        <result property="productId"   column="product_id"   />
+        <result property="sku"   column="sku"   />
+        <result property="msrp"   column="msrp"   />
+        <result property="currencyType"   column="currency_type"   />
+        <result property="country"   column="country"   />
+        <result property="year"   column="year"   />
+        <result property="validFrom"   column="valid_from"   />
+        <result property="validTo"   column="valid_to"   />
+        <result property="msrp_15"   column="msrp_15"   />
+        <result property="msrp_20"   column="msrp_20"   />
+        <result property="msrp_25"   column="msrp_25"   />
+        <result property="msrp_30"   column="msrp_30"   />
+        <result property="msrpOther"   column="msrp_other"   />
+        <result property="msrpOtherPrice"   column="msrp_other_price"   />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"   column="create_by"   />
+        <result property="createTime" column="create_time" />
+        <result property="updateBy"   column="update_by"   />
+        <result property="updateTime" column="update_time" />
+        <result property="remark" column="remark" />
+    </resultMap>
+
+    <insert id="insertNewTekMsrp" parameterType="com.ruoyi.project.tek.domain.NewTekMsrp" useGeneratedKeys="true" keyProperty="id">
+        insert into new_tek_msrp(
+        <if test="customerId != null and customerId != ''">customer_id,</if>
+        <if test="productId != null and productId != ''">product_id,</if>
+        <if test="sku != null and sku != ''">sku,</if>
+        <if test="msrp != null and msrp != ''">msrp,</if>
+        <if test="currencyType != null and currencyType != ''">currency_type,</if>
+        <if test="country != null and country != ''">country,</if>
+        <if test="year != null and year != ''">year,</if>
+        <if test="validFrom != null">valid_from,</if>
+        <if test="validTo != null">valid_to,</if>
+        <if test="msrp_15 != null and msrp_15 != ''">msrp_15,</if>
+        <if test="msrp_20 != null and msrp_20 != ''">msrp_20,</if>
+        <if test="msrp_25 != null and msrp_25 != ''">msrp_25,</if>
+        <if test="msrp_30 != null and msrp_30 != ''">msrp_30,</if>
+        <if test="msrpOther != null and msrpOther != ''">msrp_other,</if>
+        <if test="msrpOtherPrice != null and msrpOtherPrice != ''">msrp_other_price,</if>
+        <if test="delFlag != null and delFlag != ''">del_flag,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        <if test="updateBy != null and updateBy != ''">update_by,</if>
+        <if test="remark != null and remark != ''">remark,</if>
+        create_time,update_time
+        )values(
+        <if test="customerId != null and customerId != ''">#{customerId},</if>
+        <if test="productId != null and productId != ''">#{productId},</if>
+        <if test="sku != null and sku != ''">#{sku},</if>
+        <if test="msrp != null and msrp != ''">#{msrp},</if>
+        <if test="currencyType != null and currencyType != ''">#{currencyType},</if>
+        <if test="country != null and country != ''">#{country},</if>
+        <if test="year != null and year != ''">#{year},</if>
+        <if test="validFrom != null">#{validFrom},</if>
+        <if test="validTo != null">#{validTo},</if>
+        <if test="msrp_15 != null and msrp_15 != ''">#{msrp_15},</if>
+        <if test="msrp_20 != null and msrp_20 != ''">#{msrp_20},</if>
+        <if test="msrp_25 != null and msrp_25 != ''">#{msrp_25},</if>
+        <if test="msrp_30 != null and msrp_30 != ''">#{msrp_30},</if>
+        <if test="msrpOther != null and msrpOther != ''">#{msrpOther},</if>
+        <if test="msrpOtherPrice != null and msrpOtherPrice != ''">#{msrpOtherPrice},</if>
+        <if test="delFlag != null and delFlag != ''">#{delFlag},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        <if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+        <if test="remark != null and remark != ''">#{remark},</if>
+        sysdate(),sysdate()
+        )
+    </insert>
+
+    <update id="updateNewTekMsrpOther" parameterType="com.ruoyi.project.tek.domain.NewTekMsrp">
+        update new_tek_msrp
+        <set>
+            <if test="msrp != null and msrp != ''">msrp = #{msrp},</if>
+            <if test="country != null and country != ''">country = #{country},</if>
+            <if test="validFrom != null">valid_from = #{validFrom},</if>
+            <if test="validTo != null">valid_to = #{validTo},</if>
+            <if test="currencyType != null and currencyType != ''">currency_type = #{currencyType},</if>
+            <if test="msrpOther != null and msrpOther != ''">msrp_other = #{msrpOther},</if>
+            <if test="remark != null and remark != ''">remark = #{remark},</if>
+            msrp_other_price = #{msrpOtherPrice},
+            update_time = sysdate()
+        </set>
+        where id = #{id}
+    </update>
+
+    <update id="deleteMsrpByIds">
+        update new_tek_msrp set del_flag = '2' where id in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <select id="queryNewTekMsrpByPage" resultMap="NewTekMsrpVO">
+      SELECT
+            (select customer_name from new_tek_customer as ntc1 where ntc1.id = ntm.customer_id) as customerName,
+--             (select item_attributes_title from tbl_goods as tg1 where tg1.id = ntm.product_id) as productName,
+--             (select id from tbl_goods as tg1 where tg1.id = ntm.product_id) as productId,
+            ntm.*
+                FROM
+            new_tek_msrp AS ntm
+        LEFT JOIN new_tek_customer AS ntc ON ntm.customer_id = ntc.id
+--         LEFT JOIN tbl_goods AS tg ON ntm.product_id = tg.id
+        where 1=1
+        and ntm.del_flag != '2'
+        <if test="sku != null">
+            and ntm.sku like concat('%',#{sku},'%')
+        </if>
+        <if test="validFrom != null">
+            and ntm.valid_from &gt;= #{validFrom}
+        </if>
+        <if test="validTo != null">
+            and ntm.valid_to &lt;= #{validTo}
+        </if>
+        order by ntm.update_time desc
+    </select>
+
+    <select id="queryNewTekMsrpByPageForPermission" resultMap="NewTekMsrpVO">
+        SELECT
+        (select customer_name from new_tek_customer as ntc1 where ntc1.id = ntm.customer_id) as customerName,
+--         (select item_attributes_title from tbl_goods as tg1 where tg1.id = ntm.product_id) as productName,
+--         (select id from tbl_goods as tg1 where tg1.id = ntm.product_id) as productId,
+        ntm.*
+        FROM
+        new_tek_msrp AS ntm
+        LEFT JOIN new_tek_customer AS ntc ON ntm.customer_id = ntc.id
+--         LEFT JOIN tbl_goods AS tg ON ntm.product_id = tg.id
+        where 1=1
+        and ntm.del_flag != '2'
+        <if test="countryNameList != null">
+            and ntm.country in
+            <foreach item="countryNameList" index="index" collection="countryNameList"
+                     open="(" separator="," close=")"> #{countryNameList}</foreach>
+        </if>
+        <if test="sku != null">
+            and ntm.sku like concat('%',#{sku},'%')
+        </if>
+        <if test="validFrom != null">
+            and ntm.valid_from &gt;= #{validFrom}
+        </if>
+        <if test="validTo != null">
+            and ntm.valid_to &lt;= #{validTo}
+        </if>
+        order by ntm.update_time desc
+    </select>
+
+    <select id="getNewTekMsrpById" resultMap="NewTekMsrpResult">
+             select * from new_tek_msrp where id = #{id}
+    </select>
+
+
+    <select id="getNewTekMsrpVOById" resultMap="NewTekMsrpVO">
+         SELECT
+            (select customer_name from new_tek_customer as ntc1 where ntc1.id = ntm.customer_id) as customerName,
+--             (select item_attributes_title from tbl_goods as tg1 where tg1.id = ntm.product_id) as productName,
+            ntm.*
+                FROM
+            new_tek_msrp AS ntm
+        LEFT JOIN new_tek_customer AS ntc ON ntm.customer_id = ntc.id
+--         LEFT JOIN tbl_goods AS tg ON ntm.product_id = tg.id
+        where ntm.id = #{id}
+        and ntm.del_flag != '2'
+        order by ntm.update_time desc
+
+    </select>
+
+<!--    <select id="getNewTekMsrpByModelId" resultMap="NewTekMsrpResult">-->
+<!--        select * from new_tek_msrp where-->
+
+<!--    </select>-->
+
+    <select id="getNewTekMsrpByCustomerAndProductAndSku" resultMap="NewTekMsrpResult">
+        select * from new_tek_msrp where 1=1
+        and del_flag != '2'
+        <if test="customerId != null and customerId !=''">
+            and customer_id = #{customerId}
+        </if>
+        <if test="productId != null and productId !=''">
+            and product_id = #{productId}
+        </if>
+        <if test="sku != null and sku !=''">
+            and sku = #{sku}
+        </if>
+        <if test="country != null and country !=''">
+            and country = #{country}
+        </if>
+    </select>
+
+</mapper>

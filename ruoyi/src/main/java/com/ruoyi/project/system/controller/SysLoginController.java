@@ -42,10 +42,10 @@ public class SysLoginController
     /**
      * 登录方法
      * 
-     * @param username 用户名
-     * @param password 密码
-     * @param captcha 验证码
-     * @param uuid 唯一标识
+//     * @param username 用户名
+//     * @param password 密码
+//     * @param captcha 验证码
+//     * @param uuid 唯一标识
      * @return 结果
      */
     @PostMapping("/login")
@@ -53,8 +53,9 @@ public class SysLoginController
     {
         AjaxResult ajax = AjaxResult.success();
         // 生成令牌
-        String token = loginService.login(loginBody.getUsername(), loginBody.getPassword(), loginBody.getCode(),
-                loginBody.getUuid());
+//        String token = loginService.login(loginBody.getUsername(), loginBody.getPassword(), loginBody.getCode(),
+//                loginBody.getUuid());
+        String token = loginService.login(loginBody.getUsername(), loginBody.getPassword(), loginBody.getUuid());
         ajax.put(Constants.TOKEN, token);
         return ajax;
     }

@@ -16,6 +16,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+
+import com.ruoyi.project.tek.domain.NewTekCustomer;
+import com.ruoyi.project.tek.domain.NewTekPromotionType;
+import com.ruoyi.project.tek.mapper.NewTekCustomerMapper;
+import com.ruoyi.project.tek.mapper.NewTekProductModelMapper;
+import com.ruoyi.project.tek.mapper.NewTekPromotionTypeMapper;
+import com.ruoyi.project.tek.request.QueryCustomerReq;
+import com.ruoyi.project.tek.service.INewTekCustomerService;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
@@ -34,6 +42,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.ss.util.CellRangeAddressList;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFDataValidation;
@@ -50,15 +59,35 @@ import com.ruoyi.common.exception.CustomException;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.reflect.ReflectUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
+import javax.annotation.PostConstruct;
 
 /**
  * Excel相关处理
- * 
+ *
  * @author ruoyi
  */
+@Component
 public class ExcelUtil<T>
 {
     private static final Logger log = LoggerFactory.getLogger(ExcelUtil.class);
+
+    @Autowired
+    private NewTekCustomerMapper newTekCustomerMapper;
+    @Autowired
+    private NewTekPromotionTypeMapper newTekPromotionTypeMapper;
+    @Autowired
+    private NewTekProductModelMapper newTekProductModelMapper;
+
+    private static  ExcelUtil excelUtil;
+
+    @PostConstruct
+    public void initData(){
+        excelUtil = this;
+    }
 
     /**
      * Excel sheet最大行数，默认65536
@@ -105,6 +134,9 @@ public class ExcelUtil<T>
      */
     public Class<T> clazz;
 
+    public ExcelUtil() {
+    }
+
     public ExcelUtil(Class<T> clazz)
     {
         this.clazz = clazz;
@@ -125,7 +157,7 @@ public class ExcelUtil<T>
 
     /**
      * 对excel表单默认第一个索引名转换成list
-     * 
+     *
      * @param is 输入流
      * @return 转换后集合
      */
@@ -136,7 +168,7 @@ public class ExcelUtil<T>
 
     /**
      * 对excel表单指定表格索引名转换成list
-     * 
+     *
      * @param sheetName 表格索引名
      * @param is 输入流
      * @return 转换后集合
@@ -281,7 +313,7 @@ public class ExcelUtil<T>
 
     /**
      * 对list数据源将其里面的数据导入到excel表单
-     * 
+     *
      * @param list 导出数据集合
      * @param sheetName 工作表的名称
      * @return 结果
@@ -294,7 +326,7 @@ public class ExcelUtil<T>
 
     /**
      * 对list数据源将其里面的数据导入到excel表单
-     * 
+     *
      * @param sheetName 工作表的名称
      * @return 结果
      */
@@ -306,65 +338,164 @@ public class ExcelUtil<T>
 
     /**
      * 对list数据源将其里面的数据导入到excel表单
-     * 
+     *
      * @return 结果
      */
-    public AjaxResult exportExcel()
-    {
+    public AjaxResult exportExcel() {
         OutputStream out = null;
-        try
-        {
+        try {
             // 取出一共有多少个sheet.
             double sheetNo = Math.ceil(list.size() / sheetSize);
-            for (int index = 0; index <= sheetNo; index++)
-            {
-                createSheet(sheetNo, index);
+            if(sheetName.equals("SellingPrice数据")){
+                for (int index = 0; index <= 1; index++) {
+                    if(index == 0){
+                        createSheet(sheetNo, index);
+                        // 产生一行
+                        Row row = sheet.createRow(0);
+                        int column = 0;
+                        // 写入各个字段的列头名称
+                        for (Object[] os : fields) {
+                            Excel excel = (Excel) os[1];
+                            this.createCell(excel, row, column++);
+                        }
+                        if (Type.EXPORT.equals(type)) {
+                            fillExcelData(index, row);
+                        }
+                    } else {
+                        createSheet(sheetNo + 1, index);
+                        // 产生一行
+                        Row row = sheet.createRow(0);
+                        CellRangeAddress region = new CellRangeAddress(0,0,0,5);
+                        sheet.addMergedRegion(region);
+                        // 创建列
+                        Cell cell = row.createCell(0);
+                        cell.setCellValue("Valid From的格式为'yyyy-MM-dd'，例如：'2022-02-02'");
+                        cell.setCellStyle(styles.get("header"));
 
-                // 产生一行
-                Row row = sheet.createRow(0);
-                int column = 0;
-                // 写入各个字段的列头名称
-                for (Object[] os : fields)
-                {
-                    Excel excel = (Excel) os[1];
-                    this.createCell(excel, row, column++);
+                        // 产生一行
+                        Row row2 = sheet.createRow(2);
+                        CellRangeAddress region2 = new CellRangeAddress(2,2,0,5);
+                        sheet.addMergedRegion(region2);
+                        // 创建列
+                        Cell cell2 = row2.createCell(0);
+                        cell2.setCellValue("Valid To的格式为'yyyy-MM-dd'，例如：'2022-02-02'");
+                        cell2.setCellStyle(styles.get("header"));
+
+                        // 产生一行
+                        Row row3 = sheet.createRow(4);
+                        CellRangeAddress region3 = new CellRangeAddress(4,4,0,5);
+                        sheet.addMergedRegion(region3);
+                        // 创建列
+                        Cell cell3 = row3.createCell(0);
+                        cell3.setCellValue("Currency填写标准货币简称，例如：USD/GBP/EUR");
+                        cell3.setCellStyle(styles.get("header"));
+
+                        // 产生一行
+                        Row row4 = sheet.createRow(6);
+                        CellRangeAddress region4 = new CellRangeAddress(6,6,0,5);
+                        sheet.addMergedRegion(region4);
+                        // 创建列
+                        Cell cell4 = row4.createCell(0);
+                        cell4.setCellValue("Country填写标准国家简称，例如：UK/US/DE");
+                        cell4.setCellStyle(styles.get("header"));
+
+                        // 产生一行
+                        Row row5 = sheet.createRow(8);
+                        CellRangeAddress region5 = new CellRangeAddress(8,8,0,5);
+                        sheet.addMergedRegion(region5);
+                        // 创建列
+                        Cell cell5 = row5.createCell(0);
+                        cell5.setCellValue("SKU必须选择Product-SKU中已维护好的");
+                        cell5.setCellStyle(styles.get("header"));
+
+                        // 产生一行
+                        Row row8 = sheet.createRow(10);
+                        CellRangeAddress region8 = new CellRangeAddress(10,10,0,5);
+                        sheet.addMergedRegion(region8);
+                        // 创建列
+                        Cell cell8 = row8.createCell(0);
+                        cell8.setCellValue("SellingPrice支持两位小数点，例如：88.99");
+                        cell8.setCellStyle(styles.get("header"));
+
+                        // 产生一行
+                        Row row6 = sheet.createRow(12);
+                        CellRangeAddress region6 = new CellRangeAddress(12,20,0,15);
+                        sheet.addMergedRegion(region6);
+                        // 创建列
+                        Cell cell6 = row6.createCell(0);
+                        QueryCustomerReq req = new QueryCustomerReq();
+                        String customerFinal = "";
+                        List<NewTekCustomer> customerList = excelUtil.newTekCustomerMapper.getAllCustomer(req);
+                        for(int i=0;i<customerList.size();i++){
+                            if(i == customerList.size() - 1){
+                                customerFinal += customerList.get(i).getCustomerName();
+                            }else {
+                                customerFinal += customerList.get(i).getCustomerName() + ",";
+                            }
+                        }
+                        cell6.setCellValue("Customer列表：" + customerFinal);
+                        cell6.setCellStyle(styles.get("header"));
+
+                        // 产生一行
+                        Row row7 = sheet.createRow(22);
+                        CellRangeAddress region7 = new CellRangeAddress(22,29,0,15);
+                        sheet.addMergedRegion(region7);
+                        // 创建列
+                        Cell cell7 = row7.createCell(0);
+                        List<NewTekPromotionType> promotionTypeList = excelUtil.newTekPromotionTypeMapper.getAllPromotionType();
+                        String promotionTypeFinal = "";
+                        for(int i=0;i<promotionTypeList.size();i++){
+                            if(i == promotionTypeList.size() - 1){
+                                promotionTypeFinal += promotionTypeList.get(i).getPromotionType();
+                            }else {
+                                promotionTypeFinal += promotionTypeList.get(i).getPromotionType() + ",";
+                            }
+                        }
+                        cell7.setCellValue("PromotionType列表：" + promotionTypeFinal);
+                        cell7.setCellStyle(styles.get("header"));
+
+
+
+                        fillExcelData(index, row);
+                    }
                 }
-                if (Type.EXPORT.equals(type))
-                {
-                    fillExcelData(index, row);
+            }else {
+                for (int index = 0; index <= sheetNo; index++) {
+                    createSheet(sheetNo, index);
+                    // 产生一行
+                    Row row = sheet.createRow(0);
+                    int column = 0;
+                    // 写入各个字段的列头名称
+                    for (Object[] os : fields) {
+                        Excel excel = (Excel) os[1];
+                        this.createCell(excel, row, column++);
+                    }
+                    if (Type.EXPORT.equals(type)) {
+                        fillExcelData(index, row);
+                    }
                 }
             }
+
             String filename = encodingFilename(sheetName);
             out = new FileOutputStream(getAbsoluteFile(filename));
             wb.write(out);
             return AjaxResult.success(filename);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             log.error("导出Excel异常{}", e.getMessage());
             throw new CustomException("导出Excel失败，请联系网站管理员！");
         }
-        finally
-        {
-            if (wb != null)
-            {
-                try
-                {
+        finally {
+            if (wb != null) {
+                try {
                     wb.close();
-                }
-                catch (IOException e1)
-                {
+                } catch (IOException e1) {
                     e1.printStackTrace();
                 }
             }
-            if (out != null)
-            {
-                try
-                {
+            if (out != null) {
+                try {
                     out.close();
-                }
-                catch (IOException e1)
-                {
+                } catch (IOException e1) {
                     e1.printStackTrace();
                 }
             }
@@ -373,7 +504,7 @@ public class ExcelUtil<T>
 
     /**
      * 填充excel数据
-     * 
+     *
      * @param index 序号
      * @param row 单元格行
      */
@@ -400,7 +531,7 @@ public class ExcelUtil<T>
 
     /**
      * 创建表格样式
-     * 
+     *
      * @param wb 工作薄对象
      * @return 样式列表
      */
@@ -458,7 +589,7 @@ public class ExcelUtil<T>
 
     /**
      * 设置单元格信息
-     * 
+     *
      * @param value 单元格值
      * @param attr 注解相关
      * @param cell 单元格信息
@@ -551,7 +682,7 @@ public class ExcelUtil<T>
 
     /**
      * 设置 POI XSSFSheet 单元格提示
-     * 
+     *
      * @param sheet 表单
      * @param promptTitle 提示标题
      * @param promptContent 提示内容
@@ -561,7 +692,7 @@ public class ExcelUtil<T>
      * @param endCol 结束列
      */
     public void setXSSFPrompt(Sheet sheet, String promptTitle, String promptContent, int firstRow, int endRow,
-            int firstCol, int endCol)
+                              int firstCol, int endCol)
     {
         DataValidationHelper helper = sheet.getDataValidationHelper();
         DataValidationConstraint constraint = helper.createCustomConstraint("DD1");
@@ -574,7 +705,7 @@ public class ExcelUtil<T>
 
     /**
      * 设置某些列的值只能输入预制的数据,显示下拉框.
-     * 
+     *
      * @param sheet 要设置的sheet.
      * @param textlist 下拉框显示的内容
      * @param firstRow 开始行
@@ -608,7 +739,7 @@ public class ExcelUtil<T>
 
     /**
      * 解析导出值 0=男,1=女,2=未知
-     * 
+     *
      * @param propertyValue 参数值
      * @param converterExp 翻译注解
      * @return 解析后值
@@ -637,7 +768,7 @@ public class ExcelUtil<T>
 
     /**
      * 反向解析值 男=0,女=1,未知=2
-     * 
+     *
      * @param propertyValue 参数值
      * @param converterExp 翻译注解
      * @return 解析后值
@@ -675,7 +806,7 @@ public class ExcelUtil<T>
 
     /**
      * 获取下载路径
-     * 
+     *
      * @param filename 文件名称
      */
     public String getAbsoluteFile(String filename)
@@ -691,7 +822,7 @@ public class ExcelUtil<T>
 
     /**
      * 获取bean中的属性值
-     * 
+     *
      * @param vo 实体对象
      * @param field 字段
      * @param excel 注解
@@ -722,7 +853,7 @@ public class ExcelUtil<T>
 
     /**
      * 以类的属性的get方法方法形式获取值
-     * 
+     *
      * @param o
      * @param name
      * @return value
@@ -791,28 +922,24 @@ public class ExcelUtil<T>
 
     /**
      * 创建工作表
-     * 
+     *
      * @param sheetNo sheet数量
      * @param index 序号
      */
-    public void createSheet(double sheetNo, int index)
-    {
+    public void createSheet(double sheetNo, int index) {
         this.sheet = wb.createSheet();
         this.styles = createStyles(wb);
         // 设置工作表的名称.
-        if (sheetNo == 0)
-        {
+        if (sheetNo == 0) {
             wb.setSheetName(index, sheetName);
-        }
-        else
-        {
+        } else {
             wb.setSheetName(index, sheetName + index);
         }
     }
 
     /**
      * 获取单元格值
-     * 
+     *
      * @param row 获取的行
      * @param column 获取单元格列号
      * @return 单元格值

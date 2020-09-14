@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.tek.mapper.TblOrderMapper">
+
+    <resultMap type="com.ruoyi.project.tek.domain.TblOrder" id="TblOrderResult">
+        <id     property="id"     column="id"     />
+        <result property="site"   column="site"   />
+        <result property="amazonOrderId"  column="amazon_order_id"   />
+        <result property="sellerOrderId"   column="seller_order_id"   />
+        <result property="purchaseDate"   column="purchase_date"   />
+        <result property="lastUpdateDate"   column="last_update_date"   />
+        <result property="orderStatus"   column="order_status"   />
+        <result property="fulfillmentChannel"   column="fulfillment_channel"   />
+        <result property="salesChannel"   column="sales_channel"   />
+        <result property="orderChannel"   column="order_channel"   />
+        <result property="shipServiceLevel"   column="ship_service_level"   />
+        <result property="shippingAddress"   column="shipping_address"   />
+        <result property="orderTotal"   column="order_total"   />
+        <result property="currencyCode"   column="currency_code"   />
+        <result property="numberOfItemsShipped"   column="number_of_items_shipped"   />
+        <result property="numberOfItemsUnshipped"   column="number_of_items_unshipped"   />
+        <result property="paymentExecutionDetail"   column="payment_execution_detail"   />
+        <result property="paymentMethod"   column="payment_method"   />
+        <result property="marketplaceId"   column="marketplace_id"   />
+        <result property="buyerEmail"   column="buyer_email"   />
+        <result property="buyerName"   column="buyer_name"   />
+        <result property="shipmentServiceLevelCategory"   column="shipment_service_level_category"   />
+        <result property="shippedByAmazonTfm"   column="shipped_by_amazon_tfm"   />
+        <result property="tfmShipmenTstatus"   column="tfm_shipmen_tstatus"   />
+        <result property="cbaDisplayableShippingLabel"   column="cba_displayable_shipping_label"   />
+        <result property="orderType"   column="order_type"   />
+        <result property="earliestShipDate"   column="earliest_ship_date"   />
+        <result property="latestShipDate"   column="latest_ship_date"   />
+        <result property="earliestDeliveryDate"   column="earliest_delivery_date"   />
+        <result property="latestDeliveryDate"   column="latest_delivery_date"   />
+        <result property="city"   column="city"   />
+        <result property="stateOrRegion"   column="state_or_region"   />
+        <result property="countryCode"   column="country_code"   />
+        <result property="postalCode"   column="postal_code"   />
+        <result property="isBusinessOrder"   column="is_business_order"   />
+        <result property="isPrime"   column="is_prime"   />
+        <result property="isPremiumOrder"   column="is_premium_order"   />
+        <result property="isReplacementOrder"   column="is_replacement_order"   />
+        <result property="year"   column="year"   />
+        <result property="month"   column="month"   />
+        <result property="day"   column="day"   />
+        <result property="hour"   column="hour"   />
+        <result property="shopNo"   column="shopNo"   />
+    </resultMap>
+
+    <resultMap id="TblOrderAndItemVOResult" type="com.ruoyi.project.tek.vo.TblOrderAndItemVO">
+        <result property="salesPlatform"   column="salesPlatform"   />
+        <result property="site"  column="site"   />
+        <result property="amazonOrderId"  column="amazonOrderId"   />
+        <result property="fulfillmentChannel"  column="fulfillmentChannel"   />
+        <result property="sellerSku"  column="sellerSku"   />
+        <result property="purchaseDate"  column="purchaseDate"   />
+        <result property="year"  column="year"   />
+        <result property="month"  column="month"   />
+        <result property="skuCounts"  column="skuCounts"   />
+    </resultMap>
+
+    <select id="getTblOrderAndItemCountBySku" resultType="com.ruoyi.project.tek.vo.TblOrderAndItemVO" parameterType="java.util.List">
+<!--        SELECT-->
+<!--        to1.sales_platform as salesPlatform,to1.site,to1.amazon_order_id as amazonOrderId,to1.fulfillment_channel as fulfillmentChannel,-->
+<!--        toi.seller_sku as sellerSku,-->
+<!--        (to1.number_of_items_shipped + to1.number_of_items_unshipped) as buyCounts,-->
+<!--        to1.purchase_date as purchaseDate-->
+<!--        FROM-->
+<!--        tbl_order AS to1-->
+<!--        LEFT JOIN tbl_order_item AS toi ON to1.amazon_order_id = toi.amazon_order_id-->
+<!--        where toi.seller_sku in-->
+<!--        <foreach collection="list" index="index" item="item" open="(" separator= "," close=")">-->
+<!--            #{item.sku}-->
+<!--        </foreach>-->
+<!--        and to1.purchase_date > DATE_SUB(CURDATE(), INTERVAL 1 YEAR)-->
+        SELECT
+        to1.sales_platform as salesPlatform,to1.site,to1.amazon_order_id as amazonOrderId,to1.fulfillment_channel as fulfillmentChannel,
+        toi.seller_sku as sellerSku,
+        sum((to1.number_of_items_shipped + to1.number_of_items_unshipped)) as skuCounts,
+        to1.purchase_date as purchaseDate,
+        CONCAT_WS('_',to1.sales_platform,to1.site,to1.fulfillment_channel,toi.seller_sku) as ttt,
+        year(purchase_date) as `year`,month(purchase_date) as `month`
+        FROM
+        tbl_order AS to1
+        LEFT JOIN tbl_order_item AS toi ON to1.amazon_order_id = toi.amazon_order_id
+        where toi.seller_sku in
+        <foreach collection="list" index="index" item="item" open="(" separator= "," close=")">
+            #{item.sku}
+        </foreach>
+        and to1.purchase_date > DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
+        group by ttt,year(purchase_date), month(purchase_date)
+    </select>
+</mapper>

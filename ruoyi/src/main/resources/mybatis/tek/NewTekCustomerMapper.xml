@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.tek.mapper.NewTekCustomerMapper">
+
+    <resultMap type="com.ruoyi.project.tek.domain.NewTekCustomer" id="NewTekCustomerResult">
+        <id     property="id"     column="id"     />
+        <result property="customerName"   column="customer_name"   />
+        <result property="countryId"   column="country_id"   />
+        <result property="country"   column="country"   />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"   column="create_by"   />
+        <result property="createTime" column="create_time" />
+        <result property="updateBy"   column="update_by"   />
+        <result property="updateTime" column="update_time" />
+        <result property="remark" column="remark" />
+    </resultMap>
+
+    <insert id="insertNewTekCustomer" parameterType="com.ruoyi.project.tek.domain.NewTekCustomer" useGeneratedKeys="true" keyProperty="id">
+        insert into new_tek_customer(
+        <if test="customerName != null and customerName != ''">customer_name,</if>
+        <if test="countryId != null and countryId != ''">country_id,</if>
+        <if test="country != null and country != ''">country,</if>
+        <if test="delFlag != null and delFlag != ''">del_flag,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        <if test="updateBy != null and updateBy != ''">update_by,</if>
+        <if test="remark != null and remark != ''">remark,</if>
+        create_time,update_time
+        )values(
+        <if test="customerName != null and customerName != ''">#{customerName},</if>
+        <if test="countryId != null and countryId != ''">#{countryId},</if>
+        <if test="country != null and country != ''">#{country},</if>
+        <if test="delFlag != null and delFlag != ''">#{delFlag},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        <if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+        <if test="remark != null and remark != ''">#{remark},</if>
+        sysdate(),sysdate()
+        )
+    </insert>
+
+    <update id="updateNewTekCustomer" parameterType="com.ruoyi.project.tek.domain.NewTekCustomer">
+        update new_tek_customer
+        <set>
+            <if test="customerName != null and customerName != ''">customer_name = #{customerName},</if>
+            <if test="countryId != null and countryId != ''">country_id = #{countryId},</if>
+            <if test="country != null and country != ''">country = #{country},</if>
+            <if test="delFlag != null and delFlag != ''">del_flag = #{delFlag},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="remark != null and remark != ''">remark = #{remark},</if>
+            update_time = sysdate()
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="getNewTekCustomerById" resultMap="NewTekCustomerResult">
+            select * from new_tek_customer where id = #{id}
+    </select>
+
+    <select id="getNewTekCustomerByCustomerName" resultMap="NewTekCustomerResult">
+            select * from new_tek_customer where customer_name = #{_parameter}
+    </select>
+
+    <select id="getAllCustomer" parameterType="com.ruoyi.project.tek.request.QueryCustomerReq" resultMap="NewTekCustomerResult">
+        select * from new_tek_customer where del_flag != '2'
+        <if test="customerName != null and customerName !=''">
+           and customer_name like concat('%',#{customerName},'%')
+        </if>
+        <if test="country != null and country !=''">
+            and country like concat('%',#{country},'%')
+        </if>
+        order by create_time desc
+    </select>
+
+    <select id="getCustomerListPageForPermission" parameterType="com.ruoyi.project.tek.request.QueryCustomerReq" resultMap="NewTekCustomerResult">
+        select * from new_tek_customer where del_flag != '2'
+        <if test="countryNameList != null">
+            and country in
+            <foreach item="countryNameList" index="index" collection="countryNameList"
+                     open="(" separator="," close=")"> #{countryNameList}</foreach>
+        </if>
+        <if test="customerName != null and customerName !=''">
+            and customer_name like concat('%',#{customerName},'%')
+        </if>
+        <if test="country != null and country !=''">
+            and country like concat('%',#{country},'%')
+        </if>
+        order by create_time desc
+    </select>
+
+    <select id="getAllCustomerForSelect" parameterType="com.ruoyi.project.tek.request.QueryCustomerReq" resultMap="NewTekCustomerResult">
+        select * from new_tek_customer where del_flag != '2'
+        <if test="customerName != null and customerName !=''">
+            and customer_name like concat('%',#{customerName},'%')
+        </if>
+        <if test="country != null and country !=''">
+            and country like concat('%',#{country},'%')
+        </if>
+        group by customer_name
+        order by create_time desc
+    </select>
+
+    <select id="getAllCustomerForPermission" resultMap="NewTekCustomerResult">
+        select id,customer_name from new_tek_customer
+        WHERE del_flag != '2'
+        group by customer_name
+    </select>
+
+    <select id="getCustomerInfoForPermission" resultMap="NewTekCustomerResult">
+        select id,customer_name from new_tek_customer
+        where 1= 1
+        <if test="customerNameList != null">
+            and customer_name in
+            <foreach item="customerNameList" index="index" collection="customerNameList"
+                     open="(" separator="," close=")"> #{customerNameList}</foreach>
+        </if>
+        and del_flag != '2'
+        group by customer_name
+    </select>
+
+    <!--    批量删除-->
+    <delete id="deleteCustomerByIds" parameterType="java.lang.Long">
+        update new_tek_customer set del_flag = '2' where id in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+
+</mapper>

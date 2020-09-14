@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.tek.mapper.NewTekModelMapper">
+
+    <resultMap type="com.ruoyi.project.tek.domain.NewTekModel" id="NewTekModelResult">
+        <id     property="id"     column="id"     />
+        <result property="modelName"   column="model_name"   />
+        <result property="categoryId"   column="category_id"   />
+        <result property="modelSortId"   column="model_sort_id"   />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"   column="create_by"   />
+        <result property="createTime" column="create_time" />
+        <result property="updateBy"   column="update_by"   />
+        <result property="updateTime" column="update_time" />
+        <result property="remark" column="remark" />
+    </resultMap>
+
+    <insert id="insertNewTekModel" parameterType="com.ruoyi.project.tek.domain.NewTekModel" useGeneratedKeys="true" keyProperty="id">
+        insert into new_tek_model(
+        <if test="modelName != null and modelName != ''">model_name,</if>
+        <if test="categoryId != null and categoryId != ''">category_id,</if>
+        <if test="modelSortId != null and modelSortId != ''">model_sort_id,</if>
+        <if test="delFlag != null and delFlag != ''">del_flag,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        <if test="updateBy != null and updateBy != ''">update_by,</if>
+        <if test="remark != null and remark != ''">remark,</if>
+        create_time,update_time
+        )values(
+        <if test="modelName != null and modelName != ''">#{modelName},</if>
+        <if test="categoryId != null and categoryId != ''">#{categoryId},</if>
+        <if test="modelSortId != null and modelSortId != ''">#{modelSortId},</if>
+        <if test="delFlag != null and delFlag != ''">#{delFlag},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        <if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+        <if test="remark != null and remark != ''">#{remark},</if>
+        sysdate(),sysdate()
+        )
+    </insert>
+
+    <update id="updateNewTekModel" parameterType="com.ruoyi.project.tek.domain.NewTekModel">
+        update new_tek_model
+        <set>
+            <if test="modelName != null and modelName != ''">model_name = #{modelName},</if>
+            <if test="categoryId != null and categoryId != ''">category_id = #{categoryId},</if>
+            <if test="modelSortId != null and modelSortId != ''">model_sort_id = #{modelSortId},</if>
+            <if test="delFlag != null and delFlag != ''">del_flag = #{delFlag},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="remark != null and remark != ''">remark = #{remark},</if>
+            update_time = sysdate()
+        </set>
+        where id = #{id}
+    </update>
+
+<!--    批量删除-->
+    <delete id="deleteModelByIds" parameterType="java.lang.Long">
+        update new_tek_model set del_flag = '2' where id in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="queryNewTekModelAll" resultMap="NewTekModelResult" parameterType="com.ruoyi.project.tek.request.QueryModelReq">
+        select * from new_tek_model where 1=1
+         <if test="modelName != null and modelName !=''">
+             and model_name like concat('%',#{modelName},'%')
+         </if>
+         and del_flag != '2'
+         order by category_id,model_sort_id asc,update_time desc
+    </select>
+
+    <select id="getNewTekModelById" resultMap="NewTekModelResult">
+        select * from new_tek_model where id = #{id}
+    </select>
+
+    <select id="getAllModel" resultMap="NewTekModelResult" parameterType="java.lang.Long">
+        select * from new_tek_model where del_flag != '2'
+         <if test="categoryId != null and categoryId != ''">
+            and category_id = #{categoryId}
+         </if>
+         order by update_time desc
+    </select>
+
+    <select id="getModelByCategoryAndModelName" resultMap="NewTekModelResult">
+        select * from new_tek_model where del_flag != '2'
+        <if test="categoryId != null and categoryId != ''">
+            and category_id = #{categoryId}
+        </if>
+        <if test="modelName != null and modelName != ''">
+            and model_name = #{modelName}
+        </if>
+        <if test="modelSortId != null and modelSortId != ''">
+            and model_sort_id = #{modelSortId}
+        </if>
+    </select>
+
+</mapper>

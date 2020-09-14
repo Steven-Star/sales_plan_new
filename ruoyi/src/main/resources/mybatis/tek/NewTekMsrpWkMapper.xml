@@ -1,0 +1,521 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.tek.mapper.NewTekMsrpWkMapper">
+
+    <resultMap type="com.ruoyi.project.tek.vo.NewTekMsrpWKVO" id="NewTekMsrpWKVO">
+        <id     property="id"     column="id"     />
+        <result property="customerId"   column="customer_id"   />
+        <result property="productId"   column="productId"   />
+        <result property="sku"   column="sku"   />
+        <result property="msrp"   column="msrp"   />
+        <result property="currencyType"   column="currency_type"   />
+        <result property="year"   column="year"   />
+        <result property="validFromWK"   column="valid_from_wk"   />
+        <result property="validToWK"   column="valid_to_wk"   />
+        <result property="country"   column="country"   />
+        <result property="sellingPrice"   column="selling_price"   />
+        <result property="sellingPriceUSD"   column="selling_price_usd"   />
+        <result property="msrp_15"   column="msrp_15"   />
+        <result property="msrp_20"   column="msrp_20"   />
+        <result property="msrp_25"   column="msrp_25"   />
+        <result property="msrp_30"   column="msrp_30"   />
+        <result property="msrpOther"   column="msrp_other"   />
+        <result property="msrpOtherPrice"   column="msrp_other_price"   />
+        <result property="promotionType"   column="promotion_type"   />
+        <result property="wk1Msrp"   column="wk1_msrp"   />
+        <result property="wk2Msrp"   column="wk2_msrp"   />
+        <result property="wk3Msrp"   column="wk3_msrp"   />
+        <result property="wk4Msrp"   column="wk4_msrp"   />
+        <result property="wk5Msrp"   column="wk5_msrp"   />
+        <result property="wk6Msrp"   column="wk6_msrp"   />
+        <result property="wk7Msrp"   column="wk7_msrp"   />
+        <result property="wk8Msrp"   column="wk8_msrp"   />
+        <result property="wk9Msrp"   column="wk9_msrp"   />
+        <result property="wk10Msrp"   column="wk10_msrp"   />
+        <result property="wk11Msrp"   column="wk11_msrp"   />
+        <result property="wk12Msrp"   column="wk12_msrp"   />
+        <result property="wk13Msrp"   column="wk13_msrp"   />
+        <result property="wk14Msrp"   column="wk14_msrp"   />
+        <result property="wk15Msrp"   column="wk15_msrp"   />
+        <result property="wk16Msrp"   column="wk16_msrp"   />
+        <result property="wk17Msrp"   column="wk17_msrp"   />
+        <result property="wk18Msrp"   column="wk18_msrp"   />
+        <result property="wk19Msrp"   column="wk19_msrp"   />
+        <result property="wk20Msrp"   column="wk20_msrp"   />
+        <result property="wk21Msrp"   column="wk21_msrp"   />
+        <result property="wk22Msrp"   column="wk22_msrp"   />
+        <result property="wk23Msrp"   column="wk23_msrp"   />
+        <result property="wk24Msrp"   column="wk24_msrp"   />
+        <result property="wk25Msrp"   column="wk25_msrp"   />
+        <result property="wk26Msrp"   column="wk26_msrp"   />
+        <result property="wk27Msrp"   column="wk27_msrp"   />
+        <result property="wk28Msrp"   column="wk28_msrp"   />
+        <result property="wk29Msrp"   column="wk29_msrp"   />
+        <result property="wk30Msrp"   column="wk30_msrp"   />
+        <result property="wk31Msrp"   column="wk31_msrp"   />
+        <result property="wk32Msrp"   column="wk32_msrp"   />
+        <result property="wk33Msrp"   column="wk33_msrp"   />
+        <result property="wk34Msrp"   column="wk34_msrp"   />
+        <result property="wk35Msrp"   column="wk35_msrp"   />
+        <result property="wk36Msrp"   column="wk36_msrp"   />
+        <result property="wk37Msrp"   column="wk37_msrp"   />
+        <result property="wk38Msrp"   column="wk38_msrp"   />
+        <result property="wk39Msrp"   column="wk39_msrp"   />
+        <result property="wk40Msrp"   column="wk40_msrp"   />
+        <result property="wk41Msrp"   column="wk41_msrp"   />
+        <result property="wk42Msrp"   column="wk42_msrp"   />
+        <result property="wk43Msrp"   column="wk43_msrp"   />
+        <result property="wk44Msrp"   column="wk44_msrp"   />
+        <result property="wk45Msrp"   column="wk45_msrp"   />
+        <result property="wk46Msrp"   column="wk46_msrp"   />
+        <result property="wk47Msrp"   column="wk47_msrp"   />
+        <result property="wk48Msrp"   column="wk48_msrp"   />
+        <result property="wk49Msrp"   column="wk49_msrp"   />
+        <result property="wk50Msrp"   column="wk50_msrp"   />
+        <result property="wk51Msrp"   column="wk51_msrp"   />
+        <result property="wk52Msrp"   column="wk52_msrp"   />
+        <result property="wk53Msrp"   column="wk53_msrp"   />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"   column="create_by"   />
+        <result property="createTime" column="create_time" />
+        <result property="updateBy"   column="update_by"   />
+        <result property="updateTime" column="update_time" />
+        <result property="remark" column="remark" />
+        <result property="productName"   column="productName"   />
+        <result property="customerName"   column="customerName"   />
+    </resultMap>
+
+    <resultMap type="com.ruoyi.project.tek.vo.NewTekPromotionListVO" id="NewTekPromotionListVO">
+        <id     property="id"     column="id"     />
+        <result property="customerId"   column="customer_id"   />
+        <result property="productId"   column="productId"   />
+        <result property="sku"   column="sku"   />
+        <result property="msrp"   column="msrp"   />
+        <result property="currencyType"   column="currency_type"   />
+        <result property="year"   column="year"   />
+        <result property="validFromWK"   column="valid_from_wk"   />
+        <result property="validToWK"   column="valid_to_wk"   />
+        <result property="country"   column="country"   />
+        <result property="sellingPrice"   column="selling_price"   />
+        <result property="sellingPriceUSD"   column="selling_price_usd"   />
+        <result property="msrp_15"   column="msrp_15"   />
+        <result property="msrp_20"   column="msrp_20"   />
+        <result property="msrp_25"   column="msrp_25"   />
+        <result property="msrp_30"   column="msrp_30"   />
+        <result property="msrpOther"   column="msrp_other"   />
+        <result property="msrpOtherPrice"   column="msrp_other_price"   />
+        <result property="promotionType"   column="promotion_type"   />
+        <result property="wk1Msrp"   column="wk1_msrp"   />
+        <result property="wk2Msrp"   column="wk2_msrp"   />
+        <result property="wk3Msrp"   column="wk3_msrp"   />
+        <result property="wk4Msrp"   column="wk4_msrp"   />
+        <result property="wk5Msrp"   column="wk5_msrp"   />
+        <result property="wk6Msrp"   column="wk6_msrp"   />
+        <result property="wk7Msrp"   column="wk7_msrp"   />
+        <result property="wk8Msrp"   column="wk8_msrp"   />
+        <result property="wk9Msrp"   column="wk9_msrp"   />
+        <result property="wk10Msrp"   column="wk10_msrp"   />
+        <result property="wk11Msrp"   column="wk11_msrp"   />
+        <result property="wk12Msrp"   column="wk12_msrp"   />
+        <result property="wk13Msrp"   column="wk13_msrp"   />
+        <result property="wk14Msrp"   column="wk14_msrp"   />
+        <result property="wk15Msrp"   column="wk15_msrp"   />
+        <result property="wk16Msrp"   column="wk16_msrp"   />
+        <result property="wk17Msrp"   column="wk17_msrp"   />
+        <result property="wk18Msrp"   column="wk18_msrp"   />
+        <result property="wk19Msrp"   column="wk19_msrp"   />
+        <result property="wk20Msrp"   column="wk20_msrp"   />
+        <result property="wk21Msrp"   column="wk21_msrp"   />
+        <result property="wk22Msrp"   column="wk22_msrp"   />
+        <result property="wk23Msrp"   column="wk23_msrp"   />
+        <result property="wk24Msrp"   column="wk24_msrp"   />
+        <result property="wk25Msrp"   column="wk25_msrp"   />
+        <result property="wk26Msrp"   column="wk26_msrp"   />
+        <result property="wk27Msrp"   column="wk27_msrp"   />
+        <result property="wk28Msrp"   column="wk28_msrp"   />
+        <result property="wk29Msrp"   column="wk29_msrp"   />
+        <result property="wk30Msrp"   column="wk30_msrp"   />
+        <result property="wk31Msrp"   column="wk31_msrp"   />
+        <result property="wk32Msrp"   column="wk32_msrp"   />
+        <result property="wk33Msrp"   column="wk33_msrp"   />
+        <result property="wk34Msrp"   column="wk34_msrp"   />
+        <result property="wk35Msrp"   column="wk35_msrp"   />
+        <result property="wk36Msrp"   column="wk36_msrp"   />
+        <result property="wk37Msrp"   column="wk37_msrp"   />
+        <result property="wk38Msrp"   column="wk38_msrp"   />
+        <result property="wk39Msrp"   column="wk39_msrp"   />
+        <result property="wk40Msrp"   column="wk40_msrp"   />
+        <result property="wk41Msrp"   column="wk41_msrp"   />
+        <result property="wk42Msrp"   column="wk42_msrp"   />
+        <result property="wk43Msrp"   column="wk43_msrp"   />
+        <result property="wk44Msrp"   column="wk44_msrp"   />
+        <result property="wk45Msrp"   column="wk45_msrp"   />
+        <result property="wk46Msrp"   column="wk46_msrp"   />
+        <result property="wk47Msrp"   column="wk47_msrp"   />
+        <result property="wk48Msrp"   column="wk48_msrp"   />
+        <result property="wk49Msrp"   column="wk49_msrp"   />
+        <result property="wk50Msrp"   column="wk50_msrp"   />
+        <result property="wk51Msrp"   column="wk51_msrp"   />
+        <result property="wk52Msrp"   column="wk52_msrp"   />
+        <result property="wk53Msrp"   column="wk53_msrp"   />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"   column="create_by"   />
+        <result property="createTime" column="create_time" />
+        <result property="updateBy"   column="update_by"   />
+        <result property="updateTime" column="update_time" />
+        <result property="remark" column="remark" />
+        <result property="productName"   column="productName"   />
+        <result property="customerName"   column="customerName"   />
+    </resultMap>
+
+    <resultMap type="com.ruoyi.project.tek.domain.NewTekMsrpWk" id="NewTekMsrpWkResult">
+        <id     property="id"     column="id"     />
+        <result property="customerId"   column="customer_id"   />
+        <result property="msrpId"   column="msrp_id"   />
+        <result property="sku"   column="sku"   />
+        <result property="year"   column="year"   />
+        <result property="validFromWK"   column="valid_from_wk"   />
+        <result property="validToWK"   column="valid_to_wk"   />
+        <result property="currencyType"   column="currency_type"   />
+        <result property="country"   column="country"   />
+        <result property="sellingPrice"   column="selling_price"   />
+        <result property="sellingPriceUSD"   column="selling_price_usd"   />
+        <result property="promotionType"   column="promotion_type"   />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"   column="create_by"   />
+        <result property="createTime" column="create_time" />
+        <result property="updateBy"   column="update_by"   />
+        <result property="updateTime" column="update_time" />
+        <result property="remark" column="remark" />
+        <result property="validFromWKGroup" column="validFromWKGroup" />
+        <result property="validToWKGroup" column="validToWKGroup" />
+        <result property="modelName" column="modelName" />
+        <result property="disposeName" column="disposeName" />
+    </resultMap>
+
+    <insert id="insertNewTekMsrpWk" parameterType="com.ruoyi.project.tek.domain.NewTekMsrpWk" useGeneratedKeys="true" keyProperty="id">
+        insert into new_tek_msrp_wk(
+        <if test="customerId != null and customerId != ''">customer_id,</if>
+        <if test="msrpId != null and msrpId != ''">msrp_id,</if>
+        <if test="sku != null and sku != ''">sku,</if>
+        <if test="year != null and year != ''">year,</if>
+        <if test="validFromWK != null and validFromWK != ''">valid_from_wk,</if>
+        <if test="validToWK != null and validToWK != ''">valid_to_wk,</if>
+        <if test="currencyType != null and currencyType != ''">currency_type,</if>
+        <if test="country != null and country != ''">country,</if>
+        <if test="sellingPrice != null and sellingPrice != ''">selling_price,</if>
+        <if test="sellingPriceUSD != null and sellingPriceUSD != ''">selling_price_usd,</if>
+        <if test="promotionType != null and promotionType != ''">promotion_type,</if>
+        <if test="delFlag != null and delFlag != ''">del_flag,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        <if test="updateBy != null and updateBy != ''">update_by,</if>
+        <if test="remark != null and remark != ''">remark,</if>
+        create_time,update_time
+        )values(
+        <if test="customerId != null and customerId != ''">#{customerId},</if>
+        <if test="msrpId != null and msrpId != ''">#{msrpId},</if>
+        <if test="sku != null and sku != ''">#{sku},</if>
+        <if test="year != null and year != ''">#{year},</if>
+        <if test="validFromWK != null and validFromWK != ''">#{validFromWK},</if>
+        <if test="validToWK != null and validToWK != ''">#{validToWK},</if>
+        <if test="currencyType != null and currencyType != ''">#{currencyType},</if>
+        <if test="country != null and country != ''">#{country},</if>
+        <if test="sellingPrice != null and sellingPrice != ''">#{sellingPrice},</if>
+        <if test="sellingPriceUSD != null and sellingPriceUSD != ''">#{sellingPriceUSD},</if>
+        <if test="promotionType != null and promotionType != ''">#{promotionType},</if>
+        <if test="delFlag != null and delFlag != ''">#{delFlag},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        <if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+        <if test="remark != null and remark != ''">#{remark},</if>
+        sysdate(),sysdate()
+        )
+    </insert>
+    <update id="updateNewTekMsrpWk">
+                update new_tek_msrp_wk
+                <set>
+                    <if test="customerId != null and customerId != ''">customer_id = #{customerId},</if>
+                    <if test="msrpId != null and msrpId != ''">msrp_id = #{msrpId},</if>
+                    <if test="sku != null and sku != ''">sku = #{sku},</if>
+                    <if test="year != null and year != ''">`year` = #{year},</if>
+                    <if test="validFromWK != null and validFromWK != ''">valid_from_wk = #{validFromWK},</if>
+                    <if test="validToWK != null and validToWK != ''">valid_to_wk = #{validToWK},</if>
+                    <if test="currencyType != null and currencyType != ''">currency_type = #{currencyType},</if>
+                    <if test="country != null and country != ''">country = #{country},</if>
+                    <if test="sellingPrice != null and sellingPrice != ''">selling_price = #{sellingPrice},</if>
+                    <if test="sellingPriceUSD != null and sellingPriceUSD != ''">selling_price_usd = #{sellingPriceUSD},</if>
+                    <if test="promotionType != null and promotionType != ''">promotion_type = #{promotionType},</if>
+                    <if test="remark != null and remark != ''">remark = #{remark},</if>
+                    update_time = sysdate()
+                </set>
+                where id = #{id}
+    </update>
+
+    <update id="deleteMsrpWKByIds">
+        delete from new_tek_msrp_wk where id in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+<!--        update new_tek_msrp_wk set del_flag = '2' where id in-->
+<!--        <foreach collection="array" item="id" open="(" separator="," close=")">-->
+<!--            #{id}-->
+<!--        </foreach>-->
+    </update>
+
+    <select id="getNewTekMsrpWKById" resultMap="NewTekMsrpWKVO">
+             select * from new_tek_msrp_wk where id = #{id}
+    </select>
+
+    <select id="getMsrpWkByCustomerIdAndSku" resultMap="NewTekMsrpWkResult">
+        select * from new_tek_msrp_wk where 1=1
+        <if test="customerId != null and customerId !=''">
+            and  customer_id = #{customerId}
+        </if>
+        <if test="sku != null and sku !=''">
+            and  sku = #{sku}
+        </if>
+        <if test="year != null and year !=''">
+            and  `year` = #{year}
+        </if>
+        <if test="country != null and country !=''">
+            and  country = #{country}
+        </if>
+    </select>
+
+    <select id="checkMsrpWkByCustomerAndSkuAndCountryAndFromAndTo" resultMap="NewTekMsrpWkResult">
+        select * from new_tek_msrp_wk where 1=1
+        <if test="customerId != null and customerId !=''">
+            and  customer_id = #{customerId}
+        </if>
+        <if test="sku != null and sku !=''">
+            and  sku = #{sku}
+        </if>
+        <if test="validFromWK != null and validFromWK !=''">
+            and  valid_from_wk = #{validFromWK}
+        </if>
+        <if test="country != null and country !=''">
+            and  country = #{country}
+        </if>
+        <if test="validToWK != null and validToWK !=''">
+            and  valid_to_wk = #{validToWK}
+        </if>
+    </select>
+
+    <select id="queryNewTekMsrpWKByPage" resultMap="NewTekMsrpWKVO">
+        select * from new_tek_msrp_wk as ntmw left join new_tek_customer as ntc
+        on ntmw.customer_id = ntc.id
+        left join new_tek_product_model as ntpm
+        on ntmw.sku = ntpm.sku
+        AND ntpm.country_name = ntmw.country
+         where 1 = 1
+         and ntmw.del_flag != '2'
+         <if test="country != null and country != ''">
+            and ntmw.country like concat('%',#{country},'%')
+         </if>
+        <if test="sku != null and sku != ''">
+            and ntmw.sku like concat('%',#{sku},'%')
+        </if>
+        <if test="customerName != null and customerName != ''">
+           and ntc.customer_name like concat('%',#{customerName},'%')
+        </if>
+        <if test="channelType != null and channelType != ''">
+            and ntpm.channel_type  = #{channelType}
+        </if>
+         order by ntmw.create_time asc
+    </select>
+
+    <select id="queryNewTekMsrpWKByPageForPermission" resultMap="NewTekMsrpWKVO">
+        select * from new_tek_msrp_wk as ntmw left join new_tek_customer as ntc
+        on ntmw.customer_id = ntc.id
+        left join new_tek_product_model as ntpm
+        on ntmw.sku = ntpm.sku
+        AND ntpm.country_name = ntmw.country
+        where 1 = 1
+        and ntmw.del_flag != '2'
+        <if test="countryNameList != null">
+            and ntmw.country in
+            <foreach item="countryNameList" index="index" collection="countryNameList"
+                     open="(" separator="," close=")"> #{countryNameList}</foreach>
+        </if>
+        <if test="customerList != null">
+            and ntc.customer_name in
+            <foreach item="customerList" index="index" collection="customerList"
+                     open="(" separator="," close=")"> #{customerList}</foreach>
+        </if>
+        <if test="country != null and country != ''">
+            and ntmw.country like concat('%',#{country},'%')
+        </if>
+        <if test="sku != null and sku != ''">
+            and ntmw.sku like concat('%',#{sku},'%')
+        </if>
+        <if test="customerName != null and customerName != ''">
+            and ntc.customer_name like concat('%',#{customerName},'%')
+        </if>
+        <if test="channelType != null and channelType != ''">
+            and ntpm.channel_type  = #{channelType}
+        </if>
+        order by ntmw.create_time asc
+    </select>
+
+    <select id="getCalendarCount" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM (select * from new_tek_msrp_wk group by customer_id,sku,year,country ) as ntmw
+    </select>
+
+    <select id="queryPromotionListByPage" resultMap="NewTekPromotionListVO">
+        select * from new_tek_msrp_wk as ntmw left join new_tek_customer as ntc
+        on ntmw.customer_id = ntc.id
+        where 1 = 1
+        and ntmw.del_flag != '2'
+        and ntmw.promotion_type != 'Normal-Daily Price'
+        <if test="year != null and year != ''">
+           and ntmw.`year` = #{year}
+        </if>
+        <if test="promotionType != null and promotionType != ''">
+           and ntmw.promotion_type like concat('%',#{promotionType},'%')
+        </if>
+        order by ntmw.valid_from_wk,ntc.customer_name asc
+    </select>
+
+    <select id="queryPromotionListByPageForPermission" resultMap="NewTekPromotionListVO">
+        select * from new_tek_msrp_wk as ntmw left join new_tek_customer as ntc
+        on ntmw.customer_id = ntc.id
+        where 1 = 1
+        and ntmw.del_flag != '2'
+        and ntmw.promotion_type != 'Normal-Daily Price'
+        <if test="countryNameList != null">
+            and ntmw.country in
+            <foreach item="countryNameList" index="index" collection="countryNameList"
+                     open="(" separator="," close=")"> #{countryNameList}</foreach>
+        </if>
+        <if test="customerList != null">
+            and ntc.customer_name in
+            <foreach item="customerList" index="index" collection="customerList"
+                     open="(" separator="," close=")"> #{customerList}</foreach>
+        </if>
+        <if test="year != null and year != ''">
+            and ntmw.`year` = #{year}
+        </if>
+        <if test="promotionType != null and promotionType != ''">
+            and ntmw.promotion_type like concat('%',#{promotionType},'%')
+        </if>
+        order by ntmw.valid_from_wk,ntc.customer_name asc
+    </select>
+
+    <select id="queryPromotionCalendarList" resultMap="NewTekMsrpWkResult">
+            SELECT GROUP_CONCAT(ntmw.valid_from_wk) as validFromWKGroup,GROUP_CONCAT(ntmw.valid_to_wk) as validToWKGroup,ntc.customer_name as customerName,ntmw.*
+             FROM new_tek_msrp_wk AS ntmw
+                LEFT JOIN new_tek_customer AS ntc ON ntmw.customer_id = ntc.id
+                WHERE
+                    1 = 1
+                AND ntmw.del_flag != '2'
+                AND ntmw.promotion_type != 'Normal-Daily Price'
+                AND ntmw.country like concat('%',#{country},'%')
+                group by ntmw.country,ntmw.customer_id,ntmw.promotion_type,ntmw.sku,ntmw.valid_from_wk
+                ORDER BY
+	            ntmw.create_time ASC
+
+    </select>
+
+    <select id="queryPromotionCalendarListForPermission" resultMap="NewTekMsrpWkResult">
+            SELECT GROUP_CONCAT(ntmw.valid_from_wk) as validFromWKGroup,GROUP_CONCAT(ntmw.valid_to_wk) as validToWKGroup,ntc.customer_name as customerName,ntmw.*
+             FROM new_tek_msrp_wk AS ntmw
+                LEFT JOIN new_tek_customer AS ntc ON ntmw.customer_id = ntc.id
+                WHERE
+                    1 = 1
+                <if test="countryNameList != null">
+                    and ntmw.country in
+                    <foreach item="countryNameList" index="index" collection="countryNameList"
+                             open="(" separator="," close=")"> #{countryNameList}</foreach>
+                </if>
+                <if test="customerList != null">
+                    and ntc.customer_name in
+                    <foreach item="customerList" index="index" collection="customerList"
+                             open="(" separator="," close=")"> #{customerList}</foreach>
+                </if>
+                AND ntmw.del_flag != '2'
+                AND ntmw.promotion_type != 'Normal-Daily Price'
+                <if test="country != null and country !=''">
+                    AND ntmw.country like concat('%',#{country},'%')
+                </if>
+                group by ntmw.country,ntmw.customer_id,ntmw.promotion_type,ntmw.sku,ntmw.valid_from_wk
+                ORDER BY
+	            ntmw.create_time ASC
+
+    </select>
+
+    <select id="queryByDateAndPromotionType" resultMap="NewTekMsrpWkResult">
+       SELECT GROUP_CONCAT(ntmw.valid_from_wk) as validFromWKGroup,
+       GROUP_CONCAT(ntmw.valid_to_wk) as validToWKGroup,
+       ntc.customer_name as customerName,
+       ntm.model_name as modelName,ntd.dispose_name as disposeName,
+       ntmw.*
+             FROM new_tek_msrp_wk AS ntmw
+                LEFT JOIN new_tek_customer AS ntc ON ntmw.customer_id = ntc.id
+                LEFT JOIN new_tek_product_model as ntpm on ntmw.sku = ntpm.sku
+                LEFT JOIN new_tek_category AS ntcc ON ntpm.category_id = ntcc.id
+                LEFT JOIN new_tek_model AS ntm ON ntpm.model_id = ntm.id
+                LEFT JOIN new_tek_dispose AS ntd ON ntpm.dispose_id = ntd.id
+                WHERE
+                    1 = 1
+                AND ntmw.del_flag != '2'
+                AND ntmw.promotion_type != 'Normal-Daily Price'
+                AND ntmw.country like concat('%',#{country},'%')
+                group by ntmw.country,ntmw.customer_id,ntmw.promotion_type,ntmw.sku,ntmw.valid_from_wk
+                ORDER BY
+	            ntmw.create_time ASC
+    </select>
+
+    <select id="queryByDateAndPromotionTypeForPermission" resultMap="NewTekMsrpWkResult">
+       SELECT GROUP_CONCAT(ntmw.valid_from_wk) as validFromWKGroup,
+       GROUP_CONCAT(ntmw.valid_to_wk) as validToWKGroup,
+       ntc.customer_name as customerName,
+       ntm.model_name as modelName,ntd.dispose_name as disposeName,
+       ntmw.*
+             FROM new_tek_msrp_wk AS ntmw
+                LEFT JOIN new_tek_customer AS ntc ON ntmw.customer_id = ntc.id
+                LEFT JOIN new_tek_product_model as ntpm on ntmw.sku = ntpm.sku
+                LEFT JOIN new_tek_category AS ntcc ON ntpm.category_id = ntcc.id
+                LEFT JOIN new_tek_model AS ntm ON ntpm.model_id = ntm.id
+                LEFT JOIN new_tek_dispose AS ntd ON ntpm.dispose_id = ntd.id
+                WHERE
+                    1 = 1
+                <if test="countryNameList != null">
+                    and ntmw.country in
+                    <foreach item="countryNameList" index="index" collection="countryNameList"
+                             open="(" separator="," close=")"> #{countryNameList}</foreach>
+                </if>
+                <if test="customerList != null">
+                    and ntc.customer_name in
+                    <foreach item="customerList" index="index" collection="customerList"
+                             open="(" separator="," close=")"> #{customerList}</foreach>
+                </if>
+                AND ntmw.del_flag != '2'
+                AND ntmw.promotion_type != 'Normal-Daily Price'
+                <if test="country != null and country != ''">
+                    AND ntmw.country like concat('%',#{country},'%')
+                </if>
+                and #{validFromWK} between ntmw.valid_from_wk and ntmw.valid_to_wk
+                group by ntmw.country,ntmw.customer_id,ntmw.promotion_type,ntmw.sku,ntmw.valid_from_wk
+                ORDER BY
+	            ntmw.create_time ASC
+    </select>
+
+    <select id="queryMsrpWKByPromotionType" resultMap="NewTekMsrpWkResult" parameterType="java.lang.String">
+        select * from new_tek_msrp_wk as ntmw left join new_tek_customer as ntc
+        on ntmw.customer_id = ntc.id
+        where 1 = 1
+        and ntmw.del_flag != '2'
+        <if test="_parameter != null and _parameter != ''">
+            and ntmw.promotion_type = #{_parameter}
+        </if>
+        order by ntmw.create_time asc
+    </select>
+
+    <select id="queryMsrpWKCountryList" resultMap="NewTekMsrpWkResult">
+        select * from new_tek_msrp_wk
+        where del_flag != '2'
+        group by country
+        order by country asc
+    </select>
+
+
+</mapper>

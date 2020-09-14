@@ -2,6 +2,8 @@ package com.ruoyi.project.system.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.ruoyi.project.system.domain.NewSysUserMenu;
+import com.ruoyi.project.system.mapper.NewSysUserMenuMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +55,9 @@ public class SysUserServiceImpl implements ISysUserService
     @Autowired
     private ISysConfigService configService;
 
+    @Autowired
+    private NewSysUserMenuMapper newSysUserMenuMapper;
+
     /**
      * 根据条件分页查询用户列表
      * 
@@ -85,9 +90,15 @@ public class SysUserServiceImpl implements ISysUserService
      * @return 用户对象信息
      */
     @Override
-    public SysUser selectUserById(Long userId)
-    {
-        return userMapper.selectUserById(userId);
+    public SysUser selectUserById(Long userId) {
+        SysUser sysUser = userMapper.selectUserById(userId);
+        String customers = sysUser.getCustomerNames();
+        String[] customersArr = customers.split(",");
+        sysUser.setCustomerName(customersArr);
+        String countrys = sysUser.getCountryNames();
+        String[] countrysArr = countrys.split(",");
+        sysUser.setCountryName(countrysArr);
+        return sysUser;
     }
 
     /**
@@ -208,14 +219,49 @@ public class SysUserServiceImpl implements ISysUserService
      */
     @Override
     @Transactional
-    public int insertUser(SysUser user)
-    {
+    public int insertUser(SysUser user) {
+        String countryNames = "";
+        String customerNames = "";
         // 新增用户信息
+        String[] countryArr = user.getCountryName();
+        for(int i=0;i<countryArr.length;i++){
+            if(i == countryArr.length - 1){
+                countryNames+=countryArr[i];
+            }else {
+                countryNames+=countryArr[i]+",";
+            }
+        }
+        String[] customerArr = user.getCustomerName();
+            for(int i=0;i<customerArr.length;i++){
+                if(i == customerArr.length - 1){
+                    customerNames+=customerArr[i];
+                }else {
+                    customerNames+=customerArr[i]+",";
+                }
+            }
+            user.setCountryNames(countryNames);
+            user.setCustomerNames(customerNames);
         int rows = userMapper.insertUser(user);
+        //新增用户与菜单关联
+        Long[] menuIds = user.getMenuIds();
+        if (StringUtils.isNotNull(menuIds)) {
+            List<NewSysUserMenu> list = new ArrayList<NewSysUserMenu>();
+            for (Long menuId : menuIds) {
+               NewSysUserMenu newSysUserMenu = new NewSysUserMenu();
+                newSysUserMenu.setUserId(user.getUserId());
+                newSysUserMenu.setMenuId(menuId);
+                list.add(newSysUserMenu);
+            }
+            if (list.size() > 0) {
+                newSysUserMenuMapper.batchUserMenu(list);
+            }
+        }
+        
+        
         // 新增用户岗位关联
-        insertUserPost(user);
+//        insertUserPost(user);
         // 新增用户与角色管理
-        insertUserRole(user);
+//        insertUserRole(user);
         return rows;
     }
 
@@ -230,15 +276,53 @@ public class SysUserServiceImpl implements ISysUserService
     public int updateUser(SysUser user)
     {
         Long userId = user.getUserId();
+
+        String countryNames = "";
+        String customerNames = "";
+        // 新增用户信息
+        String[] countryArr = user.getCountryName();
+        for(int i=0;i<countryArr.length;i++){
+            if(i == countryArr.length - 1){
+                countryNames+=countryArr[i];
+            }else {
+                countryNames+=countryArr[i]+",";
+            }
+        }
+        String[] customerArr = user.getCustomerName();
+        for(int i=0;i<customerArr.length;i++){
+            if(i == customerArr.length - 1){
+                customerNames+=customerArr[i];
+            }else {
+                customerNames+=customerArr[i]+",";
+            }
+        }
+        user.setCountryNames(countryNames);
+        user.setCustomerNames(customerNames);
+        int rows = userMapper.updateUser(user);
+        //新增用户与菜单关联
+        Long[] menuIds = user.getMenuIds();
+        if (StringUtils.isNotNull(menuIds)) {
+            List<NewSysUserMenu> list = new ArrayList<NewSysUserMenu>();
+            for (Long menuId : menuIds) {
+                NewSysUserMenu newSysUserMenu = new NewSysUserMenu();
+                newSysUserMenu.setUserId(user.getUserId());
+                newSysUserMenu.setMenuId(menuId);
+                list.add(newSysUserMenu);
+            }
+            if (list.size() > 0) {
+                newSysUserMenuMapper.deleteUserMenuByUserId(userId);
+                newSysUserMenuMapper.batchUserMenu(list);
+            }
+        }
         // 删除用户与角色关联
-        userRoleMapper.deleteUserRoleByUserId(userId);
+//        userRoleMapper.deleteUserRoleByUserId(userId);
         // 新增用户与角色管理
-        insertUserRole(user);
+//        insertUserRole(user);
         // 删除用户与岗位关联
-        userPostMapper.deleteUserPostByUserId(userId);
+//        userPostMapper.deleteUserPostByUserId(userId);
         // 新增用户与岗位管理
-        insertUserPost(user);
-        return userMapper.updateUser(user);
+//        insertUserPost(user);
+        return rows;
     }
 
     /**
@@ -268,7 +352,6 @@ public class SysUserServiceImpl implements ISysUserService
     /**
      * 修改用户头像
      * 
-     * @param userId 用户ID
      * @param avatar 头像地址
      * @return 结果
      */

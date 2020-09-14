@@ -8,9 +8,8 @@
 	<version>2.3.0</version>
 	<packaging>jar</packaging>
 
-	<name>ruoyi</name>
-	<url>http://www.ruoyi.vip</url>
-	<description>若依管理系统</description>
+	<name>IBU_Pricing_Tool</name>
+	<description>价格监控系统</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -244,6 +243,26 @@
 			</exclusions>
 		</dependency>
 
+		<!-- lombak -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.12</version>
+		</dependency>
+
+<!--		mybatis-plus-->
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus-boot-starter</artifactId>
+			<version>3.3.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -254,6 +273,16 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
 					<fork>true</fork> <!-- 如果没有该配置，devtools不会生效 -->
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<fork>true</fork>
+					<meminitial>512m</meminitial>
+					<maxmem>1048m</maxmem>
 				</configuration>
 			</plugin>
 		</plugins>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.tek.mapper.TekSkuToMatnrMapper">
+
+    <resultMap type="com.ruoyi.project.tek.domain.TekSkuToMatnr" id="TekSkuToMatnrResult">
+        <id     property="id"     column="id"     />
+        <result property="matnr"   column="matnr"   />
+        <result property="description"  column="description"   />
+        <result property="goodsModel"   column="goods_model"   />
+        <result property="goodsSku"   column="goods_sku"   />
+        <result property="classify"   column="classify"   />
+        <result property="abcd"   column="abcd"   />
+        <result property="country"   column="country"   />
+        <result property="delFlag"   column="del_flag"   />
+        <result property="createBy"   column="create_by"   />
+        <result property="createDt"   column="create_dt"   />
+        <result property="updateBy"   column="update_by"   />
+        <result property="updateDt"   column="update_dt"   />
+    </resultMap>
+
+    <!--    根据sku倒序查询所有的内部SKU信息-->
+    <select id="queryTekSkuAll" resultMap="TekSkuToMatnrResult">
+                    SELECT
+                        *
+                    FROM
+                        tek_sku_to_matnr
+                    where 1=1 and goods_sku != ''
+                    GROUP BY goods_sku
+                    order by goods_sku desc
+    </select>
+
+
+    <!--    根据sku倒序查询所有的内部SKU信息-->
+    <select id="queryTekSkuByGoodsSKU" resultMap="TekSkuToMatnrResult" parameterType="java.lang.String">
+                    SELECT
+                        *
+                    FROM
+                        tek_sku_to_matnr
+                    where 1=1
+                     <if test="_parameter != null and _parameter !=''">
+                         and goods_sku = #{_parameter}
+                     </if>
+    </select>
+
+</mapper>

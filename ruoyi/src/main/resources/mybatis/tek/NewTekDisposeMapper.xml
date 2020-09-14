@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.tek.mapper.NewTekDisposeMapper">
+
+    <resultMap type="com.ruoyi.project.tek.domain.NewTekDispose" id="NewTekDisposeResult">
+        <id     property="id"     column="id"     />
+        <result property="disposeName"   column="dispose_name"   />
+        <result property="categoryId"   column="category_id"   />
+        <result property="modelId"   column="model_id"   />
+        <result property="disposeSortId"   column="dispose_sort_id"   />
+        <result property="disposeGroupId"   column="dispose_group_id"   />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="createBy"   column="create_by"   />
+        <result property="createTime" column="create_time" />
+        <result property="updateBy"   column="update_by"   />
+        <result property="updateTime" column="update_time" />
+        <result property="remark" column="remark" />
+    </resultMap>
+
+    <insert id="insertNewTekDispose" parameterType="com.ruoyi.project.tek.domain.NewTekDispose" useGeneratedKeys="true" keyProperty="id">
+        insert into new_tek_dispose(
+        <if test="disposeName != null and disposeName != ''">dispose_name,</if>
+        <if test="categoryId != null and categoryId != ''">category_id,</if>
+        <if test="modelId != null and modelId != ''">model_id,</if>
+        <if test="disposeSortId != null and disposeSortId != ''">dispose_sort_id,</if>
+        <if test="disposeGroupId != null and disposeGroupId != ''">dispose_group_id,</if>
+        <if test="delFlag != null and delFlag != ''">del_flag,</if>
+        <if test="createBy != null and createBy != ''">create_by,</if>
+        <if test="updateBy != null and updateBy != ''">update_by,</if>
+        <if test="remark != null and remark != ''">remark,</if>
+        create_time,update_time
+        )values(
+        <if test="disposeName != null and disposeName != ''">#{disposeName},</if>
+        <if test="categoryId != null and categoryId != ''">#{categoryId},</if>
+        <if test="modelId != null and modelId != ''">#{modelId},</if>
+        <if test="disposeSortId != null and disposeSortId != ''">#{disposeSortId},</if>
+        <if test="disposeGroupId != null and disposeGroupId != ''">#{disposeGroupId},</if>
+        <if test="delFlag != null and delFlag != ''">#{delFlag},</if>
+        <if test="createBy != null and createBy != ''">#{createBy},</if>
+        <if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+        <if test="remark != null and remark != ''">#{remark},</if>
+        sysdate(),sysdate()
+        )
+    </insert>
+
+    <update id="updateNewTekDispose" parameterType="com.ruoyi.project.tek.domain.NewTekDispose">
+        update new_tek_dispose
+        <set>
+            <if test="disposeName != null and disposeName != ''">dispose_name = #{disposeName},</if>
+            <if test="categoryId != null and categoryId != ''">category_id = #{categoryId},</if>
+            <if test="modelId != null and modelId != ''">model_id = #{modelId},</if>
+            <if test="disposeSortId != null and disposeSortId != ''">dispose_sort_id = #{disposeSortId},</if>
+            <if test="disposeGroupId != null and disposeGroupId != ''">dispose_group_id = #{disposeGroupId},</if>
+            <if test="delFlag != null and delFlag != ''">del_flag = #{delFlag},</if>
+            <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
+            <if test="remark != null and remark != ''">remark = #{remark},</if>
+            update_time = sysdate()
+        </set>
+        where id = #{id}
+    </update>
+
+<!--    批量删除-->
+    <delete id="deleteDisposeByIds" parameterType="java.lang.Long">
+        update new_tek_dispose set del_flag = '2' where id in
+        <foreach collection="array" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="queryNewTekDisposeAll" resultMap="NewTekDisposeResult" parameterType="com.ruoyi.project.tek.request.QueryDisposeReq">
+        select * from new_tek_dispose where 1=1
+         <if test="disposeName != null and disposeName !=''">
+             and dispose_name like concat('%',#{disposeName},'%')
+         </if>
+         and del_flag != '2'
+         order by update_time desc
+    </select>
+
+    <select id="getNewTekDisposeById" resultMap="NewTekDisposeResult">
+        select * from new_tek_dispose where id = #{id}
+    </select>
+
+    <select id="getNewTekDisposeByCategoryAndModelAndSortId" resultMap="NewTekDisposeResult" parameterType="com.ruoyi.project.tek.domain.NewTekDispose">
+        select * from new_tek_dispose
+        where 1=1
+        <if test="categoryId != null and categoryId != ''">
+           and category_id = #{categoryId}
+        </if>
+        <if test="modelId != null and modelId != ''">
+           and model_id = #{modelId}
+        </if>
+        <if test="disposeSortId != null and disposeSortId != ''">
+           and dispose_sort_id = #{disposeSortId}
+        </if>
+        <if test="disposeGroupId != null and disposeGroupId != ''">
+            and dispose_group_id = #{disposeGroupId}
+        </if>
+        <if test="disposeName != null and disposeName != ''">
+            and dispose_name = #{disposeName}
+        </if>
+    </select>
+
+    <select id="getAllDispose" resultMap="NewTekDisposeResult">
+        select * from new_tek_dispose where del_flag != '2'
+        <if test="modelId != null and modelId != ''">
+            and model_id = #{modelId}
+        </if>
+        order by update_time desc
+    </select>
+
+    <select id="getAllDisposeByGroupId" resultMap="NewTekDisposeResult">
+        select * from new_tek_dispose where del_flag != '2'
+        <if test="disposeGroupId != null and disposeGroupId != ''">
+            and dispose_group_id = #{disposeGroupId}
+        </if>
+        order by update_time desc
+    </select>
+
+</mapper>

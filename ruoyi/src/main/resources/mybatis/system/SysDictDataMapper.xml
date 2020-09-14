@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.project.system.mapper.SysDictDataMapper">
 	
-	<resultMap type="SysDictData" id="SysDictDataResult">
+	<resultMap type="com.ruoyi.project.system.domain.SysDictData" id="SysDictDataResult">
 		<id     property="dictCode"   column="dict_code"   />
 		<result property="dictSort"   column="dict_sort"   />
 		<result property="dictLabel"  column="dict_label"  />
@@ -22,10 +22,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<sql id="selectDictDataVo">
         select dict_code, dict_sort, dict_label, dict_value, dict_type, css_class, list_class, is_default, status, create_by, create_time, remark 
-		from sys_dict_data
+		from new_sys_dict_data
     </sql>
 
-	<select id="selectDictDataList" parameterType="SysDictData" resultMap="SysDictDataResult">
+	<select id="selectDictDataList" parameterType="com.ruoyi.project.system.domain.SysDictData" resultMap="SysDictDataResult">
 	    <include refid="selectDictDataVo"/>
 		<where>
 		    <if test="dictType != null and dictType != ''">
@@ -40,38 +40,38 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</where>
 	</select>
 	
-	<select id="selectDictDataByType" parameterType="SysDictData" resultMap="SysDictDataResult">
+	<select id="selectDictDataByType" parameterType="com.ruoyi.project.system.domain.SysDictData" resultMap="SysDictDataResult">
 		<include refid="selectDictDataVo"/>
 		where status = '0' and dict_type = #{dictType} order by dict_sort asc
 	</select>
 	
-	<select id="selectDictLabel" resultType="String">
-		select dict_label from sys_dict_data
+	<select id="selectDictLabel" resultType="java.lang.String">
+		select dict_label from new_sys_dict_data
 		where dict_type = #{dictType} and dict_value = #{dictValue}
 	</select>
 	
-	<select id="selectDictDataById" parameterType="Long" resultMap="SysDictDataResult">
+	<select id="selectDictDataById" parameterType="java.lang.Long" resultMap="SysDictDataResult">
 		<include refid="selectDictDataVo"/>
 		where dict_code = #{dictCode}
 	</select>
 	
-	<select id="countDictDataByType" resultType="Integer">
-	    select count(1) from sys_dict_data where dict_type=#{dictType}  
+	<select id="countDictDataByType" resultType="java.lang.Integer">
+	    select count(1) from new_sys_dict_data where dict_type=#{dictType}
 	</select>
 	
-	<delete id="deleteDictDataById" parameterType="Long">
- 		delete from sys_dict_data where dict_code = #{dictCode}
+	<delete id="deleteDictDataById" parameterType="java.lang.Long">
+ 		delete from new_sys_dict_data where dict_code = #{dictCode}
  	</delete>
  	
- 	<delete id="deleteDictDataByIds" parameterType="Long">
- 		delete from sys_dict_data where dict_code in
+ 	<delete id="deleteDictDataByIds" parameterType="java.lang.Long">
+ 		delete from new_sys_dict_data where dict_code in
  		<foreach collection="array" item="dictCode" open="(" separator="," close=")">
  			#{dictCode}
         </foreach> 
  	</delete>
 	
-	<update id="updateDictData" parameterType="SysDictData">
- 		update sys_dict_data
+	<update id="updateDictData" parameterType="com.ruoyi.project.system.domain.SysDictData">
+ 		update new_sys_dict_data
  		<set>
  			<if test="dictSort != null and dictSort != ''">dict_sort = #{dictSort},</if>
  			<if test="dictLabel != null and dictLabel != ''">dict_label = #{dictLabel},</if>
@@ -88,12 +88,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  		where dict_code = #{dictCode}
 	</update>
 	
-	<update id="updateDictDataType" parameterType="String">
- 		update sys_dict_data set dict_type = #{newDictType} where dict_type = #{oldDictType}
+	<update id="updateDictDataType" parameterType="java.lang.String">
+ 		update new_sys_dict_data set dict_type = #{newDictType} where dict_type = #{oldDictType}
 	</update>
  	
- 	<insert id="insertDictData" parameterType="SysDictData">
- 		insert into sys_dict_data(
+ 	<insert id="insertDictData" parameterType="com.ruoyi.project.system.domain.SysDictData">
+ 		insert into new_sys_dict_data(
  			<if test="dictSort != null and dictSort != ''">dict_sort,</if>
  			<if test="dictLabel != null and dictLabel != ''">dict_label,</if>
  			<if test="dictValue != null and dictValue != ''">dict_value,</if>

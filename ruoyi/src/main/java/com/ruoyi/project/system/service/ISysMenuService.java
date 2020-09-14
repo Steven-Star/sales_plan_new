@@ -54,6 +54,8 @@ public interface ISysMenuService
      */
     public List<Integer> selectMenuListByRoleId(Long roleId);
 
+    public List<Integer> selectMenuListByUserIdNew(Long userId);
+
     /**
      * 构建前端路由所需要的菜单
      * 

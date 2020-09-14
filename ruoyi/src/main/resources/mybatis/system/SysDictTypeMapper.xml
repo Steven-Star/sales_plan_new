@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ruoyi.project.system.mapper.SysDictTypeMapper">
 
-	<resultMap type="SysDictType" id="SysDictTypeResult">
+	<resultMap type="com.ruoyi.project.system.domain.SysDictType" id="SysDictTypeResult">
 		<id     property="dictId"     column="dict_id"     />
 		<result property="dictName"   column="dict_name"   />
 		<result property="dictType"   column="dict_type"   />
@@ -17,10 +17,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<sql id="selectDictTypeVo">
         select dict_id, dict_name, dict_type, status, create_by, create_time, remark 
-		from sys_dict_type
+		from new_sys_dict_type
     </sql>
 
-	<select id="selectDictTypeList" parameterType="SysDictType" resultMap="SysDictTypeResult">
+	<select id="selectDictTypeList" parameterType="com.ruoyi.project.system.domain.SysDictType" resultMap="SysDictTypeResult">
 	    <include refid="selectDictTypeVo"/>
 		<where>
 		    <if test="dictName != null and dictName != ''">
@@ -45,34 +45,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<include refid="selectDictTypeVo"/>
 	</select>
 	
-	<select id="selectDictTypeById" parameterType="Long" resultMap="SysDictTypeResult">
+	<select id="selectDictTypeById" parameterType="java.lang.Long" resultMap="SysDictTypeResult">
 		<include refid="selectDictTypeVo"/>
 		where dict_id = #{dictId}
 	</select>
 	
-	<select id="selectDictTypeByType" parameterType="String" resultMap="SysDictTypeResult">
+	<select id="selectDictTypeByType" parameterType="java.lang.String" resultMap="SysDictTypeResult">
 		<include refid="selectDictTypeVo"/>
 		where dict_type = #{dictType}
 	</select>
 	
-	<select id="checkDictTypeUnique" parameterType="String" resultMap="SysDictTypeResult">
+	<select id="checkDictTypeUnique" parameterType="java.lang.String" resultMap="SysDictTypeResult">
 		<include refid="selectDictTypeVo"/>
 		where dict_type = #{dictType}
 	</select>
 	
-	<delete id="deleteDictTypeById" parameterType="Long">
- 		delete from sys_dict_type where dict_id = #{dictId}
+	<delete id="deleteDictTypeById" parameterType="java.lang.Long">
+ 		delete from new_sys_dict_type where dict_id = #{dictId}
  	</delete>
  	
- 	<delete id="deleteDictTypeByIds" parameterType="Long">
- 		delete from sys_dict_type where dict_id in
+ 	<delete id="deleteDictTypeByIds" parameterType="java.lang.Long">
+ 		delete from new_sys_dict_type where dict_id in
  		<foreach collection="array" item="dictId" open="(" separator="," close=")">
  			#{dictId}
         </foreach> 
  	</delete>
 
- 	<update id="updateDictType" parameterType="SysDictType">
- 		update sys_dict_type
+ 	<update id="updateDictType" parameterType="com.ruoyi.project.system.domain.SysDictType">
+ 		update new_sys_dict_type
  		<set>
  			<if test="dictName != null and dictName != ''">dict_name = #{dictName},</if>
  			<if test="dictType != null and dictType != ''">dict_type = #{dictType},</if>
@@ -84,8 +84,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  		where dict_id = #{dictId}
 	</update>
  	
- 	<insert id="insertDictType" parameterType="SysDictType">
- 		insert into sys_dict_type(
+ 	<insert id="insertDictType" parameterType="com.ruoyi.project.system.domain.SysDictType">
+ 		insert into new_sys_dict_type(
  			<if test="dictName != null and dictName != ''">dict_name,</if>
  			<if test="dictType != null and dictType != ''">dict_type,</if>
  			<if test="status != null">status,</if>

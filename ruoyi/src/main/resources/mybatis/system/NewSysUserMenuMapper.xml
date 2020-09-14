@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.project.system.mapper.NewSysUserMenuMapper">
+
+	<resultMap type="com.ruoyi.project.system.domain.NewSysUserMenu" id="NewSysUserMenuResult">
+		<result property="userId"     column="user_id"      />
+		<result property="menuId"     column="menu_id"      />
+	</resultMap>
+	
+	<select id="checkMenuExistUser" resultType="java.lang.Integer">
+	    select count(1) from new_sys_user_menu where menu_id = #{menuId}
+	</select>
+
+	<delete id="deleteUserMenuByUserId" parameterType="java.lang.Long">
+		delete from new_sys_user_menu where user_id=#{userId}
+	</delete>
+	
+	<insert id="batchUserMenu">
+		insert into new_sys_user_menu(user_id, menu_id) values
+		<foreach item="item" index="index" collection="list" separator=",">
+			(#{item.userId},#{item.menuId})
+		</foreach>
+	</insert>
+	
+</mapper> 
