@@ -37,6 +37,13 @@ export const constantRoutes = [
       }
     ]
   },
+  // 新增测试的
+  // --------------------------------------------------------------
+  {
+    path: '/',
+    component: (resolve) => require(['@/layout/index'], resolve)
+  },
+  // --------------------------------------------------------------
   {
     path: '/login',
     component: (resolve) => require(['@/views/login'], resolve),
@@ -51,19 +58,6 @@ export const constantRoutes = [
     path: '/401',
     component: (resolve) => require(['@/views/error/401'], resolve),
     hidden: true
-  },
-  {
-    path: '',
-    component: Layout,
-    redirect: 'index',
-    children: [
-      {
-        path: 'index',
-        component: (resolve) => require(['@/views/index'], resolve),
-        name: '首页',
-        meta: { title: '首页', icon: 'dashboard', noCache: true, affix: true }
-      }
-    ]
   },
   {
     path: '/user',
@@ -118,10 +112,12 @@ export const constantRoutes = [
       }
     ]
   }
+
 ]
 
 export default new Router({
-  mode: 'history', // 去掉url中的#
+  // mode: 'history', // 去掉url中的#
+  mode: 'hash',
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })

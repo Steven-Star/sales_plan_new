@@ -20,6 +20,8 @@ import { getDicts } from "@/api/system/dict/data";
 import { getConfigKey } from "@/api/system/config";
 import { parseTime, resetForm, addDateRange, selectDictLabel, download, handleTree } from "@/utils/ruoyi";
 import Pagination from "@/components/Pagination";
+import $ from 'jquery';
+import './utils/directives.js'
 
 // 全局方法挂载
 Vue.prototype.getDicts = getDicts

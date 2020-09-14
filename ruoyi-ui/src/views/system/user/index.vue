@@ -1,30 +1,6 @@
 <template>
   <div class="app-container">
     <el-row :gutter="20">
-      <!--部门数据-->
-      <el-col :span="4" :xs="24">
-        <div class="head-container">
-          <el-input
-            v-model="deptName"
-            placeholder="请输入部门名称"
-            clearable
-            size="small"
-            prefix-icon="el-icon-search"
-            style="margin-bottom: 20px"
-          />
-        </div>
-        <div class="head-container">
-          <el-tree
-            :data="deptOptions"
-            :props="defaultProps"
-            :expand-on-click-node="false"
-            :filter-node-method="filterNode"
-            ref="tree"
-            default-expand-all
-            @node-click="handleNodeClick"
-          />
-        </div>
-      </el-col>
       <!--用户数据-->
       <el-col :span="20" :xs="24">
         <el-form :model="queryParams" ref="queryForm" :inline="true" label-width="68px">
@@ -32,16 +8,6 @@
             <el-input
               v-model="queryParams.userName"
               placeholder="请输入用户名称"
-              clearable
-              size="small"
-              style="width: 240px"
-              @keyup.enter.native="handleQuery"
-            />
-          </el-form-item>
-          <el-form-item label="手机号码" prop="phonenumber">
-            <el-input
-              v-model="queryParams.phonenumber"
-              placeholder="请输入手机号码"
               clearable
               size="small"
               style="width: 240px"
@@ -137,8 +103,6 @@
           <el-table-column label="用户编号" align="center" prop="userId" />
           <el-table-column label="用户名称" align="center" prop="userName" :show-overflow-tooltip="true" />
           <el-table-column label="用户昵称" align="center" prop="nickName" :show-overflow-tooltip="true" />
-          <el-table-column label="部门" align="center" prop="dept.deptName" :show-overflow-tooltip="true" />
-          <el-table-column label="手机号码" align="center" prop="phonenumber" width="120" />
           <el-table-column label="状态" align="center">
             <template slot-scope="scope">
               <el-switch
@@ -207,21 +171,6 @@
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="归属部门" prop="deptId">
-              <treeselect v-model="form.deptId" :options="deptOptions" placeholder="请选择归属部门" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="手机号码" prop="phonenumber">
-              <el-input v-model="form.phonenumber" placeholder="请输入手机号码" maxlength="11" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="邮箱" prop="email">
-              <el-input v-model="form.email" placeholder="请输入邮箱" maxlength="50" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
             <el-form-item v-if="form.userId == undefined" label="用户名称" prop="userName">
               <el-input v-model="form.userName" placeholder="请输入用户名称" />
             </el-form-item>
@@ -255,30 +204,44 @@
             </el-form-item>
           </el-col>
 
-          <el-col :span="12">
-            <el-form-item label="岗位">
-              <el-select v-model="form.postIds" multiple placeholder="请选择">
-                <el-option
-                  v-for="item in postOptions"
-                  :key="item.postId"
-                  :label="item.postName"
-                  :value="item.postId"
-                  :disabled="item.status == 1"
-                ></el-option>
-              </el-select>
+          <el-col :span="24">
+            <el-form-item label="全选">
+              <el-checkbox :indeterminate="isIndeterminate" v-model="countryCheckAll" @change="handleCheckAllChange">国家全选</el-checkbox>
             </el-form-item>
           </el-col>
-          <el-col :span="12">
-            <el-form-item label="角色">
-              <el-select v-model="form.roleIds" multiple placeholder="请选择">
-                <el-option
-                  v-for="item in roleOptions"
-                  :key="item.roleId"
-                  :label="item.roleName"
-                  :value="item.roleId"
-                  :disabled="item.status == 1"
-                ></el-option>
-              </el-select>
+
+          <el-col :span="24">
+            <el-form-item label="国家">
+              <el-checkbox-group v-model="countryName" @change="handleCheckedCitiesChange">
+                <el-checkbox v-for="item in countryOptions" :label="item" :key="item">{{item}}</el-checkbox>
+              </el-checkbox-group>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="24">
+            <el-form-item label="全选">
+              <el-checkbox :indeterminate="isIndeterminateCustomer" v-model="customerCheckAll" @change="customerHandleCheckAllChange">客户全选</el-checkbox>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="24">
+            <el-form-item label="客户">
+              <el-checkbox-group v-model="customerName" @change="handleCheckedCustomerChange">
+                <el-checkbox v-for="item in customerOptions" :label="item" :key="item">{{item}}</el-checkbox>
+              </el-checkbox-group>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="24">
+            <el-form-item label="菜单权限">
+              <el-tree
+                :data="menuOptions"
+                show-checkbox
+                ref="menu"
+                node-key="id"
+                empty-text="加载中，请稍后"
+                :props="defaultProps"
+              ></el-tree>
             </el-form-item>
           </el-col>
           <el-col :span="24">
@@ -328,10 +291,11 @@
 </template>
 
 <script>
-import { listUser, getUser, delUser, addUser, updateUser, exportUser, resetUserPwd, changeUserStatus, importTemplate } from "@/api/system/user";
+import { listUser, getUser, delUser, addUser, updateUser, exportUser, resetUserPwd, changeUserStatus, importTemplate, getAllCountry, getAllCustomer } from "@/api/system/user";
 import { getToken } from "@/utils/auth";
 import { treeselect } from "@/api/system/dept";
 import Treeselect from "@riophae/vue-treeselect";
+import { treeselect as menuTreeselect, roleMenuTreeselect, userMenuTreeselect } from "@/api/system/menu";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 
 export default {
@@ -372,7 +336,15 @@ export default {
       // 角色选项
       roleOptions: [],
       // 表单参数
-      form: {},
+      form: {
+        countryName: []
+      },
+      countryName: [],
+      customerName: [],
+      countryCheckAll:false,
+      customerCheckAll:false,
+      isIndeterminate: false,
+      isIndeterminateCustomer: false,
       defaultProps: {
         children: "children",
         label: "label"
@@ -430,8 +402,18 @@ export default {
             message: "请输入正确的手机号码",
             trigger: "blur"
           }
+        ],
+        countryName: [
+          { required: true, message: "国家不能为空", trigger: "blur" }
+        ],
+         customerName: [
+          { required: true, message: "客户不能为空", trigger: "blur" }
         ]
-      }
+      },
+      countryOptions: [],
+      customerOptions: [],
+       // 菜单列表
+      menuOptions: []
     };
   },
   watch: {
@@ -440,9 +422,26 @@ export default {
       this.$refs.tree.filter(val);
     }
   },
+      mounted () {
+            getAllCountry().then(res => {
+              if (res.code === 200) {
+                res.data.forEach(item => {
+                  this.countryOptions.push(item.countryName)
+                })
+              }
+            })
+
+            getAllCustomer().then(res => {
+              if (res.code === 200) {
+                res.data.forEach(item => {
+                  this.customerOptions.push(item.customerName)
+                })
+              }
+            })
+          },
   created() {
     this.getList();
-    this.getTreeselect();
+    // this.getTreeselect();
     this.getDicts("sys_normal_disable").then(response => {
       this.statusOptions = response.data;
     });
@@ -464,12 +463,38 @@ export default {
         }
       );
     },
-    /** 查询部门下拉树结构 */
-    getTreeselect() {
-      treeselect().then(response => {
-        this.deptOptions = response.data;
+        /** 查询菜单树结构 */
+    getMenuTreeselect() {
+      menuTreeselect().then(response => {
+        this.menuOptions = response.data;
       });
     },
+       /** 根据用户ID查询菜单树结构 */
+    getUserMenuTreeselect(userId) {
+      userMenuTreeselect(userId).then(response => {
+        this.menuOptions = response.menus;
+        this.$refs.menu.setCheckedKeys(response.checkedKeys);
+      });
+    },
+      handleCheckAllChange(val) {
+        this.countryName = val ? this.countryOptions : [];
+        this.isIndeterminate = false;
+        },
+      handleCheckedCitiesChange(value) {
+        let checkedCount = value.length;
+        this.countryCheckAll = checkedCount === this.countryOptions.length;
+        this.isIndeterminate = checkedCount > 0 && checkedCount < this.countryOptions.length;
+        },
+          customerHandleCheckAllChange(val) {
+            console.log(val)
+        this.customerName = val ? this.customerOptions : [];
+        this.isIndeterminateCustomer = false;
+        },
+      handleCheckedCustomerChange(value) {
+        let checkedCount = value.length;
+        this.customerCheckAll = checkedCount === this.customerOptions.length;
+        this.isIndeterminateCustomer = checkedCount > 0 && checkedCount < this.customerOptions.length;
+        },
     // 筛选节点
     filterNode(value, data) {
       if (!value) return true;
@@ -514,7 +539,9 @@ export default {
         status: "0",
         remark: undefined,
         postIds: [],
-        roleIds: []
+        roleIds: [],
+        customerName: [],
+        countryName: []
       };
       this.resetForm("form");
     },
@@ -529,6 +556,15 @@ export default {
       this.resetForm("queryForm");
       this.handleQuery();
     },
+      // 所有菜单节点数据
+    getMenuAllCheckedKeys() {
+      // 目前被选中的菜单节点
+      let checkedKeys = this.$refs.menu.getHalfCheckedKeys();
+      // 半选中的菜单节点
+      let halfCheckedKeys = this.$refs.menu.getCheckedKeys();
+      checkedKeys.unshift.apply(checkedKeys, halfCheckedKeys);
+      return checkedKeys;
+    },
     // 多选框选中数据
     handleSelectionChange(selection) {
       this.ids = selection.map(item => item.userId);
@@ -538,7 +574,7 @@ export default {
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
-      this.getTreeselect();
+       this.getMenuTreeselect();
       getUser().then(response => {
         this.postOptions = response.posts;
         this.roleOptions = response.roles;
@@ -550,9 +586,19 @@ export default {
     /** 修改按钮操作 */
     handleUpdate(row) {
       this.reset();
-      this.getTreeselect();
+         this.$nextTick(() => {
+        this.getUserMenuTreeselect(row.userId);
+      });
       const userId = row.userId || this.ids;
       getUser(userId).then(response => {
+        this.countryName = [];
+        this.customerName = [];
+          response.data.countryName.forEach(item => {
+                  this.countryName.push(item)
+                })
+          response.data.customerName.forEach(item => {
+                  this.customerName.push(item)
+                })      
         this.form = response.data;
         this.postOptions = response.posts;
         this.roleOptions = response.roles;
@@ -581,6 +627,9 @@ export default {
       this.$refs["form"].validate(valid => {
         if (valid) {
           if (this.form.userId != undefined) {
+              this.form.countryName = this.countryName;
+            this.form.customerName = this.customerName;
+             this.form.menuIds = this.getMenuAllCheckedKeys();
             updateUser(this.form).then(response => {
               if (response.code === 200) {
                 this.msgSuccess("修改成功");
@@ -589,6 +638,9 @@ export default {
               }
             });
           } else {
+            this.form.countryName = this.countryName;
+            this.form.customerName = this.customerName;
+             this.form.menuIds = this.getMenuAllCheckedKeys();
             addUser(this.form).then(response => {
               if (response.code === 200) {
                 this.msgSuccess("新增成功");

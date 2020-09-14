@@ -1,9 +1,9 @@
 <template>
   <div class="login">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form">
-      <h3 class="title">若依后台管理系统</h3>
+      <h3 class="title">IBU Price Monitoring</h3>
       <el-form-item prop="username">
-        <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="账号">
+        <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="user name">
           <svg-icon slot="prefix" icon-class="user" class="el-input__icon input-icon" />
         </el-input>
       </el-form-item>
@@ -12,17 +12,17 @@
           v-model="loginForm.password"
           type="password"
           auto-complete="off"
-          placeholder="密码"
+          placeholder="password"
           @keyup.enter.native="handleLogin"
         >
           <svg-icon slot="prefix" icon-class="password" class="el-input__icon input-icon" />
         </el-input>
       </el-form-item>
-      <el-form-item prop="code">
+      <!-- <el-form-item prop="code">
         <el-input
           v-model="loginForm.code"
           auto-complete="off"
-          placeholder="验证码"
+          placeholder="identifying code"
           style="width: 63%"
           @keyup.enter.native="handleLogin"
         >
@@ -31,8 +31,8 @@
         <div class="login-code">
           <img :src="codeUrl" @click="getCode" />
         </div>
-      </el-form-item>
-      <el-checkbox v-model="loginForm.rememberMe" style="margin:0px 0px 25px 0px;">记住密码</el-checkbox>
+      </el-form-item> -->
+      <el-checkbox v-model="loginForm.rememberMe" style="margin:0px 0px 25px 0px;">remember password</el-checkbox>
       <el-form-item style="width:100%;">
         <el-button
           :loading="loading"
@@ -41,14 +41,14 @@
           style="width:100%;"
           @click.native.prevent="handleLogin"
         >
-          <span v-if="!loading">登 录</span>
-          <span v-else>登 录 中...</span>
+          <span v-if="!loading">login in</span>
+          <span v-else>login...</span>
         </el-button>
       </el-form-item>
     </el-form>
     <!--  底部  -->
     <div class="el-login-footer">
-      <span>Copyright © 2018-2019 ruoyi.vip All Rights Reserved.</span>
+      <span>Copyright © 2018-2020 TINECO All Rights Reserved.</span>
     </div>
   </div>
 </template>
@@ -65,8 +65,8 @@ export default {
       codeUrl: "",
       cookiePassword: "",
       loginForm: {
-        username: "admin",
-        password: "admin123",
+        username: "",
+        password: "",
         rememberMe: false,
         code: "",
         uuid: ""
@@ -78,7 +78,7 @@ export default {
         password: [
           { required: true, trigger: "blur", message: "密码不能为空" }
         ],
-        code: [{ required: true, trigger: "change", message: "验证码不能为空" }]
+        // code: [{ required: true, trigger: "change", message: "验证码不能为空" }]
       },
       loading: false,
       redirect: undefined

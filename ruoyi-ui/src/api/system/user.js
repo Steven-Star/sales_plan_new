@@ -125,3 +125,19 @@ export function importTemplate() {
     method: 'get'
   })
 }
+
+// 查询所有可选择的国家
+export function getAllCountry() {
+  return request({
+    url: '/tek/newTekProductModel/getAllCountry',
+    method: 'get'
+  })
+}
+
+// 查询所有可选择的客户
+export function getAllCustomer() {
+  return request({
+    url: '/tek/newTekCustomer/getAllCustomerForPermission',
+    method: 'get'
+  })
+}

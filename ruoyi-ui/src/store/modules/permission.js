@@ -21,6 +21,7 @@ const permission = {
         getRouters().then(res => {
           const accessedRoutes = filterAsyncRouter(res.data)
           accessedRoutes.push({ path: '*', redirect: '/404', hidden: true })
+          // console.log(accessedRoutes)
           commit('SET_ROUTES', accessedRoutes)
           resolve(accessedRoutes)
         })

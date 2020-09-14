@@ -33,6 +33,14 @@ export function roleMenuTreeselect(roleId) {
   })
 }
 
+// 根据用户ID查询菜单下拉树结构
+export function userMenuTreeselect(userId) {
+  return request({
+    url: '/system/menu/userMenuTreeselect/' + userId,
+    method: 'get'
+  })
+}
+
 // 新增菜单
 export function addMenu(data) {
   return request({

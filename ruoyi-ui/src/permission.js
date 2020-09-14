@@ -14,7 +14,7 @@ router.beforeEach((to, from, next) => {
   if (getToken()) {
     /* has token*/
     if (to.path === '/login') {
-      next({ path: '/' })
+      next({ path: '/dashboard' })
       NProgress.done()
     } else {
       if (store.getters.roles.length === 0) {
@@ -37,7 +37,29 @@ router.beforeEach((to, from, next) => {
             })
           })
       } else {
+        //新加的判断代码
+        if (to.path === '/404') {
+          next({ path: '/' })
+          NProgress.done()
+        } else {
+          store.getters.permission_routes.forEach(item =>{
+            if(item.children !== undefined){
+                item.children.forEach(child => {
+                  if(child.path === 'dashboard'){
+                    // next({ redirect: '/dashboard' })
+                    // NProgress.done()
+                  }
+                })
+            }else {
+            }
+          })
+        }
+
+
+        //已有的
         next()
+
+
         // 没有动态改变权限的需求可直接next() 删除下方权限判断 ↓
         // if (hasPermission(store.getters.roles, to.meta.roles)) {
         //   next()
@@ -48,12 +70,17 @@ router.beforeEach((to, from, next) => {
       }
     }
   } else {
+    console.log(333)
     // 没有token
     if (whiteList.indexOf(to.path) !== -1) {
+      console.log(444)
       // 在免登录白名单，直接进入
       next()
     } else {
-      next(`/login?redirect=${to.path}`) // 否则全部重定向到登录页
+      console.log(555)
+      console.log('90909090' + to.path)
+      // next(`/login?redirect=${to.path}`) // 否则全部重定向到登录页
+      next(`/login`) // 否则全部重定向到登录页
       NProgress.done()
     }
   }
