@@ -244,8 +244,6 @@ public class NewTekProductModelServiceImpl implements INewTekProductModelService
                         failureMsg.append("<br/>" + failureNum + "、SKU " + productModel.getSku() + "导入失败，没有查询到对应品类！");
                     }
                 } else if (isUpdateSupport) {
-                    // TODO: 2020/7/16  
-//                    user.setUpdateBy(operName);
                     successNum++;
                     successMsg.append("<br/>" + successNum + "、SKU " + productModel.getSku() + " 更新成功");
                 } else {

@@ -104,7 +104,6 @@ public class TblGoodsServiceImpl implements ITblGoodsService {
             //2.同品类、同配置、不同系列
             newTekCalendarVO = queryByModelSortId(map,newTekCalendarVO);
             //3.同一个sku、country、时间段内，不同的customer的价格要一样，否则要warning
-            // TODO: 2020/7/22
             newTekCalendarVO = queryBySkuCountryAndDiffCustomer(map,newTekCalendarVO);
             newTekCalendarVO.setSkuList(skuList);
             newTekCalendarVO.setCustomerList(customerList);
@@ -279,7 +278,6 @@ public class TblGoodsServiceImpl implements ITblGoodsService {
                 String year = newTekCalendarVO.getYear();
                 String fromDay = newTekCalendarVO.getValidFromWK();
                 String toDay = newTekCalendarVO.getValidToWK();
-                // TODO: 2020/7/22
                 if(toDay.equals("9999-12-31")){
                     toDay = reqYear + "-12-31";
                 }
@@ -2430,7 +2428,6 @@ public class TblGoodsServiceImpl implements ITblGoodsService {
                 productModel.setModelId(newTekCalendarVO.getModelId());
                 productModel.setDisposeSortId(i);
                 String countryNew = newTekCalendarVO.getCountry().split("_")[0] + "_" + newTekCalendarVO.getCountry().split("_")[1];
-                // TODO: 2020/8/18
 //                productModel.setCountryName(countryNew);
                 productModel.setCountryName(newTekCalendarVO.getCountry());
                  List<NewTekProductModel> productModelList = newTekProductModelMapper.getProductModelByCategoryAndModelAndDisposeSortId(productModel);
@@ -5017,7 +5014,6 @@ public class TblGoodsServiceImpl implements ITblGoodsService {
                 productModel.setCategoryId(newTekCalendarVO.getCategoryId());
                 productModel.setModelSortId(i);
 //                productModel.setDisposeId(newTekCalendarVO.getDisposeId());
-                // TODO: 2020/8/6 修改disposeId为disposeSortId
                 productModel.setDisposeSortId(newTekCalendarVO.getDisposeSortId());
 //                String countryNew = newTekCalendarVO.getCountry().split("_")[0] + "-" + newTekCalendarVO.getCountry().split("_")[1];
 //                productModel.setCountryName(countryNew);

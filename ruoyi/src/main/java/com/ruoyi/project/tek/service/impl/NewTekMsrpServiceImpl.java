@@ -272,7 +272,6 @@ public class NewTekMsrpServiceImpl implements INewTekMsrpService {
 //                        failureMsg.append("<br/>" + failureNum + "、SKU " + newTekMsrp.getSku() + "的MSRP导入失败！");
 //                    }
                 } else if (isUpdateSupport) {
-                    // TODO: 2020/7/16
 //                    user.setUpdateBy(operName);
 //                    this.UPDAT
                     successNum++;

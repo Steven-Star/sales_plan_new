@@ -398,7 +398,6 @@ public class NewTekMsrpWkServiceImpl implements INewTekMsrpWkService {
         int failureNum = 0;
         StringBuilder successMsg = new StringBuilder();
         StringBuilder failureMsg = new StringBuilder();
-        // TODO: 2020/8/28
         DynamicDataSourceContextHolder.setDataSourceType(DataSourceType.SLAVE.name());
         List<TekSkuToMatnr> tekSkuToMatnrList = tekSkuToMatnrMapper.queryTekSkuAll();
         DynamicDataSourceContextHolder.clearDataSourceType();
@@ -538,8 +537,6 @@ public class NewTekMsrpWkServiceImpl implements INewTekMsrpWkService {
                     successNum++;
                     successMsg.append("<br/>" + successNum + "、Selling Price " + newTekMsrpWk.getSku() + " 导入成功");
                 } else if (isUpdateSupport) {
-                    // TODO: 2020/7/16
-//                    user.setUpdateBy(operName);
                     successNum++;
                     successMsg.append("<br/>" + successNum + "、Selling Price " + newTekMsrpWk.getSku() + " 更新成功");
                 } else {
