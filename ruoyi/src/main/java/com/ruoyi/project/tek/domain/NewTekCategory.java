@@ -22,8 +22,6 @@ public class NewTekCategory implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-
-
     @Excel(name = "CategoryId", type = Excel.Type.EXPORT)
     private Long id;
 
